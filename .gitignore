@@ -1,1 +1,26 @@
-physionet.org/*
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# Large Datasets and intermediate files
+data/raw/
+data/processed/
+*.edf
+*.seizures
+
+# Allow directory structure tracking
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# OS / Editor artifacts
+.DS_Store
+*.swp
+*.swo
