@@ -10,6 +10,11 @@ __pycache__/
 env/
 venv/
 
+# uv package manager
+uv.lock
+dist/
+.uv-cache/
+
 # Large Datasets and intermediate files
 data/raw/
 data/processed/
