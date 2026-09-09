@@ -14,6 +14,9 @@ venv/
 uv.lock
 dist/
 .uv-cache/
+.python-version
+pyproject.toml
+src
 
 # Large Datasets and intermediate files
 data/raw/
