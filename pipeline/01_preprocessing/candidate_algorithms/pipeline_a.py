@@ -17,7 +17,7 @@ class PipelineAConfig:
     h_freq: float = DEFAULT_H_FREQ
     n_components: int = DEFAULT_N_COMPONENTS
     random_state: int = DEFAULT_RANDOM_STATE
-    eog_proxy: str = "Fp1"
+    eog_proxy: str = "auto" 
     eog_corr_thresh: float = 0.4
     muscle_thresh: float = 0.3
     target_sfreq: float = TARGET_SFREQ
@@ -28,7 +28,7 @@ class PipelineAConfig:
 def run_pipeline_a(raw_std: BaseRaw, config: PipelineAConfig | None = None, recording_id: str | None = None):
     t0 = time.perf_counter()
     cfg = config or PipelineAConfig()
-    provenance: dict = {"pipeline_id": PIPELINE_ID,"recording_id": recording_id, "parameters": asdict(cfg), "input_channels": list(raw_std.ch_names), "input_sfreq": raw_std.info["sfreq"], "input_n_times": raw_std.n_times}
+    provenance: dict = {"pipeline_id": PIPELINE_ID, "recording_id": recording_id, "parameters": asdict(cfg), "input_channels": list(raw_std.ch_names), "input_sfreq": raw_std.info["sfreq"], "input_n_times": raw_std.n_times}
 
     raw_filt = fir_bandpass(raw_std, cfg.l_freq, cfg.h_freq, cfg.n_jobs)
 
@@ -58,9 +58,10 @@ if __name__ == "__main__":
     import mne
 
     DATA_ROOT = Path("/run/media/rangerofdanger/Files/Data Speaks/data/raw/physionet.org/")
-    OUT_DIR = Path("/run/media/rangerofdanger/Files/Data Speaks/data/processed/pipeline_A")
+    OUT_DIR = Path("/run/media/rangerofdanger/Files/Data Speals/data/processed/pipeline_A")
     PROV_DIR = Path("/run/media/rangerofdanger/Files/Data Speaks/results/benchmarks/pipeline_A")
     PATIENT_DIVISOR = 4
+
     OVERRIDE_PATIENT = "chb01"
 
     def selected_patient_dirs(root: Path) -> list[Path]:
@@ -76,10 +77,16 @@ if __name__ == "__main__":
 
     run_summary = {"pipeline_id": PIPELINE_ID, "patients": [], "failures": []}
 
-    patient_dirs = ([DATA_ROOT / OVERRIDE_PATIENT] if OVERRIDE_PATIENT else selected_patient_dirs(DATA_ROOT))
+    override = globals().get("OVERRIDE_PATIENT")
+    patient_dirs = ([DATA_ROOT / override]
+                    if override
+                    else selected_patient_dirs(DATA_ROOT))
     missing = [str(d) for d in patient_dirs if not d.is_dir()]
     if missing:
-        raise FileNotFoundError(f"Patient folder(s) not found under {DATA_ROOT}: {missing}. ""Check OVERRIDE_PATIENT / DATA_ROOT.")
+        raise FileNotFoundError(
+            f"Patient folder(s) not found under {DATA_ROOT}: {missing}. "
+            "Check OVERRIDE_PATIENT / DATA_ROOT."
+        )
 
     for patient_dir in patient_dirs:
         patient_id = patient_dir.name
@@ -90,15 +97,16 @@ if __name__ == "__main__":
             recording_id = edf_path.stem
             try:
                 raw_std = mne.io.read_raw_edf(edf_path, preload=True, verbose=False)
-                raw_out, prov = run_pipeline_a(raw_std,recording_id=recording_id)
+                raw_out, prov = run_pipeline_a(raw_std, recording_id=recording_id)
                 prov["stage0_bypassed"] = True 
-                raw_out.save(OUT_DIR / f"{recording_id}_raw.fif",overwrite=True, verbose=False)
+
+                raw_out.save(OUT_DIR / f"{recording_id}_raw.fif", overwrite=True, verbose=False)
                 with open(PROV_DIR / f"{recording_id}_provenance.json","w") as fh:
                     json.dump(prov, fh, indent=2)
 
                 print(f"  OK   {recording_id} " f"({prov['runtime_seconds']}s, " f"ICs excluded: {prov['ica']['excluded_components']})")
             except Exception:
-                run_summary["failures"].append({"recording_id": recording_id,"traceback": traceback.format_exc()})
+                run_summary["failures"].append({"recording_id": recording_id, "traceback": traceback.format_exc()})
                 print(f"  FAIL {recording_id} — see run_summary.json")
 
         with open(PROV_DIR / "run_summary.json", "w") as fh:
