@@ -24,3 +24,7 @@ data/processed/
 .DS_Store
 *.swp
 *.swo
+
+# Experiment outputs
+results/*.png
+results/pipeline_a_test/
