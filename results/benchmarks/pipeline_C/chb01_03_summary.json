@@ -1,0 +1,76 @@
+{
+  "pipeline_id": "pipeline_C_butterworth_asr_ica_zscore_256",
+  "patient_id": "chb01",
+  "recording_id": "chb01_03",
+  "timings": {
+    "butterworth_sec": 0.847235000001092,
+    "asr_sec": 27.61988939999719,
+    "ica_sec": 27.288421599994763,
+    "standardization_sec": 0.28959320000285516,
+    "total_pipeline_c_sec": 56.04918819999875
+  },
+  "structural": {
+    "input_duration_sec": 3599.99609375,
+    "output_duration_sec": 3599.99609375,
+    "input_n_channels": 17,
+    "output_n_channels": 17,
+    "input_sfreq": 256.0,
+    "output_sfreq": 256.0,
+    "input_nan_count": 0,
+    "output_nan_count": 0,
+    "input_inf_count": 0,
+    "output_inf_count": 0,
+    "channels_preserved": true,
+    "sfreq_preserved": true,
+    "duration_preserved": true
+  },
+  "ica": {
+    "n_ica_components_fit": 15,
+    "n_components_excluded": 2,
+    "pct_components_excluded": 13.33,
+    "excluded_indices": [
+      2,
+      1
+    ],
+    "eog_proxy_channels": [
+      "FP1-F7",
+      "FP2-F4"
+    ],
+    "ica_method": "fastica",
+    "ica_variance_threshold": 0.99
+  },
+  "data_preservation": {
+    "input_rms": 4.355652144597225e-05,
+    "after_butterworth": {
+      "output_rms": 3.62495927786026e-05,
+      "rms_diff": 1.9550447235294626e-05,
+      "relative_rms_change": 0.448852
+    },
+    "after_asr": {
+      "output_rms": 2.7478295917537382e-05,
+      "rms_diff": 3.2553256060196685e-05,
+      "relative_rms_change": 0.74738
+    },
+    "after_ica": {
+      "output_rms": 2.4468327128332195e-05,
+      "rms_diff": 3.506610117311535e-05,
+      "relative_rms_change": 0.805071
+    },
+    "final": {
+      "output_rms": 1.0,
+      "rms_diff": 0.9999747390342706,
+      "relative_rms_change": 22958.094582
+    }
+  },
+  "qc_summary": {
+    "total_windows_all_channels": 30583,
+    "flat_windows": 0,
+    "high_amplitude_windows": 0,
+    "high_variance_windows": 845,
+    "high_freq_windows": 0,
+    "clipped_windows": 0,
+    "invalid_windows": 0,
+    "any_flag_windows": 845,
+    "pct_any_flag": 2.763
+  }
+}
