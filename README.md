@@ -1,88 +1,53 @@
-# Data-Speaks
-
-**How does the mathematical structure of multichannel EEG change during epileptic seizures, and can these changes be used to characterize and distinguish ictal from interictal brain states?**
-
-Data-Speaks is a rigorous, research-capable computational neuroscience project built around the CHB-MIT Scalp EEG Database. It is developed as part of the 3rd-semester course *Mathematics for Data Science* at the **Indian Institute of Technology Dharwad (IIT Dharwad)**, Department of Mathematics and Computing.
-
-> **Scope disclaimer:** This is an educational/research-oriented project. It does **not** claim clinical usefulness or diagnostic validity.
+# Data Speaks!! — Epileptic Seizure Pattern Mining & EEG Analysis
+> **Course Project:** Data Speaks!! (Educational Data Mining & Data Science)  
+> **Institution:** Indian Institute of Technology Dharwad (IIT Dharwad)  
+> **Marks Distribution:** 30 Marks (20 Midterm + 10 Endterm)  
+> **Dataset:** [CHB-MIT Scalp EEG Database](https://physionet.org/content/chbmit/1.0.0/) (Boston Children's Hospital / MIT)
 
 ---
 
-## Table of Contents
+## 📌 Executive Summary & Objective
 
-1. [Research Overview](#1-research-overview)
-2. [Dataset](#2-dataset)
-3. [Project Architecture](#3-project-architecture)
-4. [The Six-Stage Pipeline](#4-the-six-stage-pipeline)
-5. [Common Stage 0 — Mandatory Standardization](#5-common-stage-0--mandatory-standardization)
-6. [Candidate Preprocessing Pipelines](#6-candidate-preprocessing-pipelines)
-7. [Team Collaboration Conventions](#7-team-collaboration-conventions)
-8. [Evaluation Philosophy](#8-evaluation-philosophy)
-9. [Repository Maintenance Notes](#9-repository-maintenance-notes)
-10. [Getting Started](#10-getting-started)
-11. [Current Status & Roadmap](#11-current-status--roadmap)
-12. [References](#12-references)
+Epilepsy is one of the most prevalent neurological conditions globally, characterized by sudden, recurrent neuro-electrical disturbances (seizures). Scalp Electroencephalography (EEG) records continuous multi-channel electrical brain activity at microvolt resolution. 
+
+As part of the **"Data Speaks!!"** course initiative, our team is analyzing the benchmark **CHB-MIT Scalp EEG Dataset**. The core objectives are:
+1. **Explore and clean** multi-channel clinical pediatric EEG time-series data.
+2. **Benchmark 4 distinct preprocessing pipelines** head-to-head to isolate noise, remove artifacts, and preserve true seizure morphology.
+3. **Extract predictive features** and train Machine Learning models to detect epileptic seizures automatically under extreme class imbalance.
+4. **Deliver an interactive web dashboard** hosted via GitHub showcasing our findings, visualizations, and live model predictions.
 
 ---
 
-## 1. Research Overview
+## 👥 Team Pipeline Division (4 Approaches)
 
-The project investigates how the mathematical structure of multichannel EEG changes during epileptic seizures. Instead of a one-off ML exercise, Data-Speaks implements a **reproducible pipeline** that demonstrates concepts from Mathematics for Data Science end to end:
+To systematically study how preprocessing affects downstream machine learning, our team divided into 4 specialized signal-processing approaches with a shared channel, windowing, and evaluation policy:
 
-```
-Dataset exploration
-  → Preprocessing
-  → Segmentation
-  → Feature extraction
-  → Dimensionality reduction
-  → Clustering
-  → Classification
-  → Quantitative evaluation
-  → Interpretation
-```
-
-The same philosophy governs every stage: **multiple methodologically distinct candidate algorithms are proposed, implemented, and compared under a common evaluation protocol; the empirically strongest method is carried forward.**
-
-We do not claim any algorithm is optimal in advance — we demonstrate *why* a method was selected.
+| Approach | Assigned Pipeline | Key Characteristics | Lead |
+| :--- | :--- | :--- | :--- |
+| **Approach 1** | **FIR Bandpass $\to$ ICA Artifact Removal $\to$ Z-Score Normalization** | Linear phase, zero phase distortion, classical matrix decomposition for ocular/muscle noise. | Teammate 1 |
+| **Approach 2** | **Butterworth Bandpass $\to$ Wavelet Denoising $\to$ Robust Scaling $\to$ Polyphase Resampling** | Smooth IIR filtering, time-frequency multi-resolution wavelet thresholding, outlier-resistant scaling. | Manish |
+| **Approach 3** | **Butterworth Bandpass $\to$ ASR + ICA $\to$ Channel Standardization $\to$ Resampling** | Modern automated Artifact Subspace Reconstruction (ASR) with principal component subspace rejection. | Kavyanjali |
+| **Approach 4** | **Chebyshev Type II Bandpass $\to$ Robust Statistical Artifact Detection $\to$ Decimation** | Ultra-sharp stopband rolloff, zero passband distortion, blazingly fast statistical outlier checks, 60.9% dimensional compression. | **Avni (This Module)** |
 
 ---
 
-## 2. Dataset
+## 🏛️ Dataset Overview & Harmonization Standard
 
-**CHB-MIT Scalp EEG Database** — [PhysioNet](https://physionet.org/content/chbmit/1.0.0/), version 1.0.0.
-
-- Multichannel scalp EEG from pediatric patients with intractable epilepsy
-- EDF format, seizure annotations included
-- ~42.6 GB raw (large but manageable; never committed to Git)
-
-### Local layout
-
-The raw dataset lives at:
-
-```
-data/raw/physionet.org/
-```
-
-Raw data is **immutable**. All processing writes to `data/processed/`, never back to `data/raw/`.
-
-### Dataset audit (recorded channel counts)
-
-| Channels | Files |
-|---|---|
-| 22 | 26 |
-| 23 | 276 |
-| 24 | 54 |
-| 25 | 1 |
-| 28 | 275 |
-| 29 | 14 |
-| 31 | 1 |
-| 38 | 39 |
-
-**Special montage:** 3 recordings use unipolar/CS2-referenced channel names (e.g., `F7-CS2`, `T7-CS2`, `FP1-CS2`). These are **valid recordings, not corrupted data** — they are handled through a separate special-montage branch and tracked separately in benchmarks.
+- **Subjects:** 24 pediatric patients (`chb01` – `chb24`) with intractable epilepsy.
+- **Sampling Frequency:** $256 \text{ Hz}$ ($256$ samples per second per channel).
+- **Format:** European Data Format (`.edf`) binary time-series paired with clinical annotations (`chbXX-summary.txt`).
+- **Standard 18-Channel Bipolar Policy (International 10–20 Double Banana Montage):**
+  - *Left Temporal:* `FP1-F7`, `F7-T7`, `T7-P7`, `P7-O1`
+  - *Left Parasagittal:* `FP1-F3`, `F3-C3`, `C3-P3`, `P3-O1`
+  - *Right Parasagittal:* `FP2-F4`, `F4-C4`, `C4-P4`, `P4-O2`
+  - *Right Temporal:* `FP2-F8`, `F8-T8`, `T8-P8`, `P8-O2`
+  - *Midline:* `FZ-CZ`, `CZ-PZ`
+- **Windowing (Segmentation):** $4.0\text{-second}$ sliding windows with $50\%$ overlap ($2.0\text{-second}$ step).
+- **Labeling Standard:** Window labeled `1` (Ictal / Seizure) if $\ge 50\%$ duration intersects documented clinical seizure times; otherwise `0` (Interictal / Normal).
 
 ---
 
-## 3. Project Architecture
+## Project Architecture
 
 ```
 Data-Speaks/
@@ -122,242 +87,163 @@ Data-Speaks/
 └── LICENSE
 ```
 
----
+## 🚀 Completed Work: Phase 1 (Midterm Milestone — 20 Marks)
 
-## 4. The Six-Stage Pipeline
+For the midterm evaluation, our work focused on **data ingestion, schema auditing, preprocessing verification on `chb01`, and Exploratory Data Analysis (EDA)**.
 
-Each stage follows the same cycle:
+### 1. Approach 4 Implementation & Pipeline Architecture
+- **Chebyshev Type II Filter ($0.5 - 45\text{ Hz}$):**
+  - Designed an order-4 IIR filter with stopband attenuation of $30\text{ dB}$ using `scipy.signal.cheby2`.
+  - Filtered bidirectionally with `sosfiltfilt` (zero phase delay, zero brain-wave distortion).
+  - Power Spectral Density (PSD) confirms $>30\text{ dB}$ suppression of the $60\text{ Hz}$ US electrical powerline interference.
+- **Decimation ($256\text{ Hz} \to 128\text{ Hz}$):**
+  - Implemented 2x downsampling with automatic lowpass anti-aliasing via `scipy.signal.decimate`.
+  - Preserved the full Nyquist band up to $64\text{ Hz}$ while reducing disk storage and memory by **$60.9\%$**.
+- **Robust Statistical Artifact Detection:**
+  - Evaluates each 4-second epoch for physiological validity:
+    1. *Flatline Check:* Variance $< 1.0\ \mu V^2$ (loose or fallen electrode).
+    2. *Lead Pop / Step Jump:* Instantaneous single-sample differential $> 200\ \mu V$ (static shock/cable bump).
+    3. *Abnormal Channel Variance:* Channel variance $> 15\times$ median channel variance.
+    4. *Extreme Saturation:* Amplitude $> 800\ \mu V$.
+  - Preserves genuine clinical seizures (which naturally exhibit high-voltage rhythmic activity between $200\text{--}900\ \mu V$) while safely flagging true hardware/muscle noise.
 
-```
-common standardized input
-  → candidate method A/B/C/D
-  → shared evaluation under identical conditions
-  → empirical selection of the winner
-  → winner feeds the next stage
-```
+### 2. Experimental Verification on Subject `chb01`
 
-| Stage | Focus | Candidate families |
-|---|---|---|
-| 01 Preprocessing | Signal cleaning & standardization | FIR/Butterworth/Chebyshev filters, ICA, wavelets, ASR, robust scaling |
-| 02 Segmentation | Windowing | (to be designed) |
-| 03 Feature Extraction | Time / frequency / statistical features | (to be designed) |
-| 04 Dimensionality Reduction | Linear & subspace methods | PCA, SVD, ICA |
-| 05 Clustering | Unsupervised structure | K-Means, hierarchical, DBSCAN |
-| 06 Classification | Supervised discrimination | Logistic Regression, Random Forest, SVM, KNN |
+| Recording ID | Raw Size | Processed Size | Clean Epochs | Flagged Artifacts (%) | Seizure Epochs | Total Runtime | Throughput vs Real-Time |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **`chb01_03.edf`** | 40.44 MB | **15.82 MB** | 1,788 | 11 (0.61%) | **21 epochs** | **0.899 s** | **4,002x** |
+| **`chb01_01.edf`** | 40.44 MB | **15.82 MB** | 1,424 | 375 (20.84%) | 0 (Baseline) | **0.927 s** | **3,883x** |
+| **`chb01_04.edf`** | 40.44 MB | **15.82 MB** | 1,754 | 45 (2.50%) | **14 epochs** | **1.657 s** | **2,172x** |
 
-Each stage directory contains a `README.md` documenting the stage's **common contract** (inputs, outputs, parameters, policies), plus `candidate_algorithms/` (one folder per method) and a shared `evaluation/` (used by everyone — never customized to favor one implementation).
-
----
-
-## 5. Common Stage 0 — Mandatory Standardization
-
-Before any candidate preprocessing method is applied, **every** recording passes through the same shared Stage 0:
-
-```
-Raw EDF
-  → EDF integrity checks
-  → Annotation parsing
-  → Remove dummy / non-EEG channels
-  → Remove ECG, VNS, other auxiliary channels
-  → Standardized EEG channel selection
-  → Special montage detection
-  → Quality checks
-  → Standardized EEG input
-  → Candidate pipeline A/B/C/D
-```
-
-Stage 0 is **shared and immutable** across candidate pipelines. If team members used different channel policies or annotation interpretations, the preprocessing comparison would be invalid.
-
-### Common channel policy
-
-- Keep EEG channels; remove ECG, VNS, and dummy/non-EEG/auxiliary channels
-- Preserve original EEG channel names
-- Establish a canonical EEG channel set for standard-montage recordings
-- Missing channels are **not** automatically treated as corruption
-- No interpolation during Stage 0 unless explicitly justified later
-- CS2/unipolar recordings are handled in a separate branch, never silently forced into the standard montage
-
-### Common quality-control (QC) policy
-
-QC **flags** problems rather than deleting suspicious data:
-
-| Check | Detects |
-|---|---|
-| `FLAT` | nearly zero variance |
-| `HIGH_AMPLITUDE` | extreme values vs. robust channel distribution |
-| `HIGH_VARIANCE` | abnormally large window variance |
-| `HIGH_FREQ` | excessive muscle/electrical artifact |
-| `CLIPPED` | repeated min/max values |
-| `INVALID` | NaN/Inf or invalid numerical values |
-
-Valid status: `GOOD`. MNE-Python utilities may support detection, but the QC policy must remain explicit and documented in code — no undocumented defaults.
-
-### Common windowing policy
-
-- Window length: **4 s**; overlap: **50%**
-- Target sampling rate: **256 Hz** → `4 × 256 = 1024` samples per window
-- Identical for all pipelines and all downstream comparisons
-
-### Common seizure-labeling policy
-
-For each window, `seizure_overlap = duration(window ∩ seizure_interval)`:
-
-| Condition | Label |
-|---|---|
-| ≥ 50% overlap with a seizure interval | `1` (ictal) |
-| No overlap, sufficiently away from seizure boundaries | `0` (interictal) |
-| Overlaps a seizure but below the ictal threshold | `-1` (ambiguous, excluded from supervised training) |
-
-### Leakage prevention
-
-All supervised evaluation uses **patient-wise splits**:
-
-```
-Patients_train ∩ Patients_val = ∅
-Patients_train ∩ Patients_test = ∅
-Patients_val ∩ Patients_test = ∅
-```
-
-Windows from the same patient are never scattered across splits — adjacent windows are highly correlated, and patient-specific characteristics would otherwise inflate metrics.
+### 3. Generated Exploratory Data Analysis (EDA)
+- **Spectral PSD Comparison:** Clear visual proof of line hum removal and flat passband response (`plots/psd_chebyshev_comparison.png`).
+- **Time-Domain Waveform Comparison:** Direct side-by-side visualization of calm interictal background vs. synchronous spike-and-wave discharges during seizure (`plots/seizure_vs_normal_eeg.png`).
+- **Artifact Rejection Distribution:** Quantified breakdown of artifact categories across recordings (`plots/artifact_detection_breakdown.png`).
+- **Jupyter Notebook Deliverable:** Self-contained, reproducible notebook [Approach4_CHB01_Preprocessing_EDA.ipynb](file:///C:/Users/avani/.gemini/antigravity/scratch/chbmit_pipeline_approach4/Approach4_CHB01_Preprocessing_EDA.ipynb).
 
 ---
 
-## 6. Candidate Preprocessing Pipelines
+## 🔮 Future Roadmap: Phase 2 (Endterm Milestone — 10 Marks)
 
-Four complete, methodologically distinct candidate pipelines are compared. *(4 substeps × 4 choices would be 256 combinations — we deliberately do **not** grid-search; we design four coherent pipelines.)*
+In accordance with the **"Data Speaks!!"** project guidelines, here is the complete plan for the final submission:
 
-### Pipeline A — Conservative / Classical *(reference baseline)*
 ```
-FIR band-pass → ICA artifact removal → per-channel Z-score → 256 Hz
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        DATA SPEAKS!! ENDTERM EXECUTION ROADMAP                         │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+                                           │
+    ┌────────────────────────┬─────────────┴────────────┬────────────────────────┐
+    ▼                        ▼                          ▼                        ▼
+[1. Dataset Scaling]   [2. Feature Eng.]      [3. Machine Learning]    [4. Deliverables]
+  • Scale to chb02-24    • 5 Brain Wave Bands   • Supervised Classifiers  • GitHub Web Page
+  • Cross-subject pool   • Statistical Moments  • Unsupervised Clustering • 3-5 Page Report
+  • Unified metadata     • Cross-Channel Corr   • Dimensionality Red.     • Model Deployment
 ```
-Controlled, linear-phase filtering; the most established multichannel EEG artifact-removal approach; simple, interpretable normalization.
 
-### Pipeline B — Adaptive / Time-Frequency
-```
-Butterworth band-pass → Wavelet denoising → Robust scaling → 256 Hz (polyphase)
-```
-Wavelet denoising operates in a time-frequency representation (fundamentally different from ICA's independent-source decomposition); robust scaling handles transient extremes; polyphase resampling folds anti-alias filtering into resampling. *(Wavelet family and thresholding strategy must be specified before implementation.)*
+### Step 1: Dataset-Wide Scaling (`chb01` $\to$ `chb24`)
+- Run the validated Approach 4 pipeline across all remaining recordings with clinical seizures.
+- Compile a single unified dataset manifest linking patient demographic data (Age, Gender) with seizure onset latency.
 
-### Pipeline C — Subspace-Based / Aggressive
-```
-Butterworth band-pass → ASR → ICA → per-channel standardization → 256 Hz
-```
-ASR targets contaminated covariance subspaces via sliding-window PCA reconstruction — a strong mathematical match to the course content. **Caveat:** the ASR → ICA stacking is a candidate ordering to benchmark, not an assumed improvement; over-cleaning that removes seizure-relevant structure must be evaluated.
+### Step 2: Comprehensive Feature Engineering
+Extract domain-grounded feature vectors for every 4-second epoch across 3 families:
+1. **Frequency-Domain (Spectral Bands via Welch's PSD):**
+   - Delta ($\delta$: $0.5 - 4\text{ Hz}$): Slow-wave seizure discharge power.
+   - Theta ($\theta$: $4 - 8\text{ Hz}$): Temporal lobe rhythmic activity.
+   - Alpha ($\alpha$: $8 - 13\text{ Hz}$): Posterior background rhythm.
+   - Beta ($\beta$: $13 - 30\text{ Hz}$): Fast background rhythm.
+   - Gamma ($\gamma$: $30 - 45\text{ Hz}$): High-frequency bursts.
+   - Spectral Ratios: $(\delta + \theta) / (\alpha + \beta)$ and Spectral Entropy.
+2. **Time-Domain (Statistical & Morphological):**
+   - Energy / Variance ($\sigma^2$), Peak-to-Peak amplitude (PTP).
+   - Skewness and Kurtosis (capturing heavy-tailed spike distributions).
+   - Zero-Crossing Rate (ZCR) and Hjorth Parameters (Activity, Mobility, Complexity).
+3. **Spatial & Connectivity Features:**
+   - Inter-channel Pearson cross-correlation matrix (capturing hemispheric hyper-synchronization).
 
-### Pipeline D — Lightweight / Statistical
-```
-Chebyshev Type II band-pass → robust statistical artifact detection → per-channel standardization → decimation
-```
-Tests whether sophisticated artifact-removal justifies its computational cost. Final decimation factor fixed before comparison.
+### Step 3: Machine Learning & Modeling (Aligned with Syllabus Rubric)
+- **Supervised Classification (Seizure Detection):**
+  - Baseline: Logistic Regression & Support Vector Classifier (RBF Kernel).
+  - Ensembles: **Random Forest** & **XGBoost / LightGBM** (evaluating feature importance rankings).
+  - Deep Learning (Optional / Advanced): 1D-CNN or CNN-LSTM operating directly on multi-channel time slices.
+- **Unsupervised Clustering (Brain State Discovery):**
+  - Apply **K-Means** and **DBSCAN** on extracted feature embeddings to discover whether unannotated sub-clinical seizure patterns or distinct sleep stages emerge naturally.
+- **Dimensionality Reduction:**
+  - **PCA (Principal Component Analysis):** Linear projection to 2D/3D showing separability of ictal vs. interictal manifolds.
+  - **t-SNE / UMAP:** Non-linear manifold learning for visual validation of class separation.
 
-### How pipelines are compared
+### Step 4: Tackling Imbalance & Validation Protocol
+- **Imbalance Mitigation:** Since seizures represent $<0.5\%$ of data, use **SMOTE (Synthetic Minority Over-sampling)**, random undersampling of interictal background, and `class_weight='balanced'`.
+- **Validation Schemes:**
+  - *Patient-Specific:* 5-Fold Stratified Cross-Validation within a single patient.
+  - *Cross-Patient Generalization:* Leave-One-Subject-Out (LOSO) cross-validation to evaluate real-world clinical applicability.
+- **Metrics:** Prioritize **Sensitivity (Recall)**, **Specificity**, **Precision**, **F1-Score**, and **AUROC / AUPRC** rather than deceptive overall accuracy.
 
-**Level 1 — Intrinsic quality:** artifact suppression, signal/spectral/waveform preservation, SNR under controlled synthetic contamination, runtime, memory.
+### Step 5: "Data Speaks!!" Interactive Web Page Deliverable
+As mandated in the assignment specifications, we will develop and host a responsive web application:
+- **Hosting:** GitHub Pages / Streamlit Community Cloud.
+- **Interactive Features:**
+  - *Live Dataset Explorer:* Select patient and recording to inspect clinical metadata.
+  - *Interactive Waveform Viewer:* Scrub through 18-channel EEG signals before, during, and after seizures.
+  - *Audio / Spectral Sonification:* Visualize live frequency power shifts during seizure onset.
+  - *Pipeline Comparison Dashboard:* Interactive side-by-side comparison of all 4 team approaches.
+  - *Live Prediction Playground:* Upload a sample EEG window to test our trained ML classifier.
 
-**Level 2 — Downstream usefulness:** identical segmentation, features, models, patient-wise splits, and metrics — **only** the preprocessing varies.
-
-Winner is **never** chosen on raw classification accuracy alone, and never on a tiny numerical difference without statistical consideration (per-patient metrics + paired tests / bootstrap CIs).
+### Step 6: Final 3–5 Page Project Report
+- Structure according to standard IEEE/ACM scientific paper formatting:
+  1. *Abstract & Introduction:* Clinical background and problem formulation.
+  2. *Dataset & Preprocessing:* Comparative review of the 4 pipelines and justification for Approach 4.
+  3. *Feature Engineering & Modeling:* Methodological description of classifiers and clustering.
+  4. *Results & Discussion:* Performance tables, confusion matrices, ROC curves, and clinical interpretations.
+  5. *Conclusion & Future Work:* Real-time hardware deployment feasibility on wearable EEG devices.
 
 ---
 
-## 7. Team Collaboration Conventions
+## 📁 Repository Structure
 
-- **Everyone learns the full pipeline** — no one is permanently siloed into one algorithm.
-- Each member implements one **complete** candidate pipeline (filtering → artifact removal → normalization → resampling) from the shared Stage 0 input.
-- All evaluation uses the **shared evaluator** under identical conditions.
-- Independent implementations append author initials to filenames to avoid merge conflicts:
+```
+chbmit_pipeline_approach4/
+│
+├── README.md                                  <- Comprehensive project guide & roadmap
+├── approach4_pipeline.py                      <- Modular preprocessing library (Chebyshev II, Decimation, Artifacts)
+├── run_pipeline_chb01.py                      <- Execution and benchmarking script on chb01
+├── make_notebook.py                           <- Automated generator for assignment notebook
+├── Approach4_CHB01_Preprocessing_EDA.ipynb    <- Primary Jupyter Notebook deliverable for midterm
+│
+├── output/
+│   └── approach4_chb01_metrics.csv            <- Benchmark metrics table for chb01 recordings
+│
+└── plots/
+    ├── psd_chebyshev_comparison.png           <- Power Spectral Density (PSD) showing 60 Hz hum removal
+    ├── seizure_vs_normal_eeg.png              <- Waveform comparison: Interictal vs Ictal seizure discharge
+    └── artifact_detection_breakdown.png       <- Distribution of flagged non-physiological artifacts
+```
+
+---
+
+## 💻 How to Run the Project
+
+### Prerequisites
+- Python 3.10+ (Tested on Python 3.14)
+- Core scientific libraries:
+  ```bash
+  pip install numpy scipy pandas matplotlib scikit-learn mne
   ```
-  butterworth_AT.py
-  wavelet_RK.py
-  ica_AS.py
-  ```
-- Raw dataset and generated processed data are **never** committed (see `.gitignore`). Only small, deliberate artifacts may be committed when needed.
-- Empty structural directories are kept in Git via `.gitkeep` files.
 
----
-
-## 8. Evaluation Philosophy
-
-1. Raw data is immutable.
-2. All team members use the same Stage 0.
-3. All candidate pipelines receive identical standardized input.
-4. All pipelines use the same windowing and labeling policy.
-5. All supervised evaluation uses patient-wise splitting.
-6. Never compare pipelines with different downstream classifiers or feature sets.
-7. Never choose algorithms based only on visual appearance.
-8. Never declare a winner on tiny numerical differences without statistics.
-9. Never assume more aggressive preprocessing is better.
-10. Never process the full dataset until the pipeline is validated on representative recordings.
-11. Document every parameter and decision.
-12. Treat the three CS2-reference recordings separately — they are not corrupted.
-
-Real EEG has no perfectly clean ground truth, so intrinsic evaluation combines real-data inspection, spectral/waveform preservation analysis, QC metrics, **controlled synthetic contamination** (where an approximate clean reference exists), and downstream validation. *Visual smoothness ≠ better preprocessing.*
-
----
-
-## 9. Repository Maintenance Notes
-
-- **GitHub repo maintainer:** Pipeline A owner (repo admin duties — PR reviews, branch hygiene, releases).
-- `.gitignore` must exclude:
-  ```
-  data/raw/
-  data/processed/
-  *.edf
-  __pycache__/
-  .ipynb_checkpoints/
-  ```
-- Empty folders (e.g., `pipeline/01_preprocessing/evaluation/`, `results/figures/`) are tracked with `.gitkeep`.
-- Every stage has exactly one shared `README.md` (the contract) and one shared `evaluation/` — changes to these require team agreement, not unilateral edits.
-
----
-
-## 10. Getting Started
-
+### Running the Preprocessing Pipeline
+To execute the complete pipeline on `chb01` and regenerate all performance metrics:
 ```bash
-# 1. Clone
-git clone https://github.com/<org>/Data-Speaks.git
-cd Data-Speaks
-
-# 2. Environment
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-
-# 3. Dataset (not in Git — download separately)
-# Place CHB-MIT under data/raw/physionet.org/ preserving the PhysioNet layout
-
-# 4. Explore
-jupyter notebook notebooks/01_dataset_exploration.ipynb
+python run_pipeline_chb01.py
 ```
 
-Core dependencies: `mne`, `numpy`, `scipy`, `pandas`, `scikit-learn`, `matplotlib`, `seaborn`, `pyedflib` (see `requirements.txt`).
+### Running the Jupyter Notebook
+Launch JupyterLab or VS Code to interactively step through the cells and view visualizations:
+```bash
+jupyter lab Approach4_CHB01_Preprocessing_EDA.ipynb
+```
 
 ---
 
-## 11. Current Status & Roadmap
-
-**Current stage:** Project architecture & preprocessing methodology design ✅ (repo scaffold, pipeline definitions, common policies finalized)
-
-**Next steps:**
-
-- [ ] Write `pipeline/01_preprocessing/README.md` (the formal common contract)
-- [ ] Implement shared **Stage 0** (EDF integrity, annotation parsing, channel standardization, special-montage detection, QC, metadata generation)
-- [ ] Dataset-wide audit → master `metadata.csv`
-- [ ] Select ~6 representative benchmark recordings (+ 3 CS2 recordings as a separate special-case set)
-- [ ] Implement candidate pipelines A–D on the benchmark
-- [ ] Pilot comparison (waveform, PSD, artifact suppression, runtime, size)
-- [ ] Freeze pipeline definitions → scale to the full dataset
-- [ ] Proceed through stages 02–06 with the same candidate→evaluate→select cycle
-
----
-
-## 12. References
-
-- **Oppenheim & Schafer** — *Discrete-Time Signal Processing* (primary DSP theory)
-- **Nunez & Srinivasan** — *Electric Fields of the Brain* (EEG-specific theory)
-- **Goldberger et al.** — *PhysioBank, PhysioToolkit, and PhysioNet* (CHB-MIT source)
-- **MNE-Python documentation** — practical EEG implementation
-- Project reports → `reports/`
-
----
-
-*Data-Speaks — a course project by the Mathematics and Computing team, IIT Dharwad.*
+## 📖 References
+1. **Goldberger, A. L., et al.** (2000). *PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals.* Circulation, 101(23), e215-e220.
+2. **Shoeb, A. H.** (2010). *Application of Machine Learning to Epileptic Seizure Onset Detection and Treatment.* PhD Thesis, Massachusetts Institute of Technology.
+3. **Gramfort, A., et al.** (2013). *MEG and EEG data analysis with MNE-Python.* Frontiers in Neuroscience, 7, 267.
