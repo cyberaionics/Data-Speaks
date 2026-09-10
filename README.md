@@ -1,363 +1,237 @@
-# Data-Speaks
+# Data-Speaks: Multichannel EEG Mathematical Structure Analysis
 
 **How does the mathematical structure of multichannel EEG change during epileptic seizures, and can these changes be used to characterize and distinguish ictal from interictal brain states?**
 
-Data-Speaks is a rigorous, research-capable computational neuroscience project built around the CHB-MIT Scalp EEG Database. It is developed as part of the 3rd-semester course *Mathematics for Data Science* at the **Indian Institute of Technology Dharwad (IIT Dharwad)**, Department of Mathematics and Computing.
+Data-Speaks is a computational neuroscience research pipeline built around the **CHB-MIT Scalp EEG Database**. Developed for the course *Mathematics for Data Science* at the **Indian Institute of Technology Dharwad (IIT Dharwad)**, Department of Mathematics and Computing.
 
-> **Scope disclaimer:** This is an educational/research-oriented project. It does **not** claim clinical usefulness or diagnostic validity.
+> **Scope Disclaimer:** Educational and research-oriented project. Does **not** claim clinical usefulness or diagnostic validity.
 
 ---
 
 ## Table of Contents
 
-1. [Research Overview](#1-research-overview)
-2. [Dataset](#2-dataset)
-3. [Project Architecture](#3-project-architecture)
-4. [The Six-Stage Pipeline](#4-the-six-stage-pipeline)
-5. [Common Stage 0 — Mandatory Standardization](#5-common-stage-0--mandatory-standardization)
-6. [Candidate Preprocessing Pipelines](#6-candidate-preprocessing-pipelines)
-7. [Team Collaboration Conventions](#7-team-collaboration-conventions)
-8. [Evaluation Philosophy](#8-evaluation-philosophy)
-9. [Repository Maintenance Notes](#9-repository-maintenance-notes)
-10. [Getting Started](#10-getting-started)
-11. [Current Status & Roadmap](#11-current-status--roadmap)
-12. [References](#12-references)
+1. [Research & Pipeline Overview](#1-research--pipeline-overview)
+2. [Dataset & Local Layout](#2-dataset--local-layout)
+3. [Repository Structure](#3-repository-structure)
+4. [Completed Pipeline Stages & Scientific Methodology](#4-completed-pipeline-stages--scientific-methodology)
+   - [Stage 0 — Standardization & Quality Control](#stage-0--standardization--quality-control)
+   - [Pipeline C — Artifact Removal & Cleaning](#pipeline-c--artifact-removal--cleaning)
+   - [Stage 02 — Segmentation](#stage-02--segmentation)
+   - [Stage 03 — Feature Extraction](#stage-03--feature-extraction)
+   - [Stage 04 — Dimensionality Reduction (PCA)](#stage-04--dimensionality-reduction-pca)
+   - [Stage 05 — Unsupervised Clustering](#stage-05--unsupervised-clustering)
+   - [Midterm 5-Pillar EDA](#midterm-5-pillar-eda)
+5. [Summary of Results & Empirical Validation](#5-summary-of-results--empirical-validation)
+6. [How to Run the Code](#6-how-to-run-the-code)
+7. [Repository Hygiene & Git Policies](#7-repository-hygiene--git-policies)
+8. [References](#8-references)
 
 ---
 
-## 1. Research Overview
+## 1. Research & Pipeline Overview
 
-The project investigates how the mathematical structure of multichannel EEG changes during epileptic seizures. Instead of a one-off ML exercise, Data-Speaks implements a **reproducible pipeline** that demonstrates concepts from Mathematics for Data Science end to end:
+The project investigates multichannel EEG dynamics during epileptic seizures by implementing a leakage-safe, reproducible data science pipeline:
 
 ```
-Dataset exploration
-  → Preprocessing
-  → Segmentation
-  → Feature extraction
-  → Dimensionality reduction
-  → Clustering
-  → Classification
-  → Quantitative evaluation
-  → Interpretation
+Raw EDF Data
+  └── Stage 0: Channel Standardization (17 Bipolar Montage) & QC
+       └── Pipeline C: Butterworth 1-40 Hz → ASR → FastICA → Z-Score
+            └── Stage 02: 4.0s Sliding Windowing (50% Overlap, 256 Hz)
+                 └── Stage 03: Feature Extraction (17 Ch x 26 Feats = 442 Features)
+                      └── Stage 04: Dimensionality Reduction (PCA to 95% Variance)
+                           └── Stage 05: Unsupervised Clustering (K-Means & DBSCAN)
+                                └── Midterm 5-Pillar EDA
 ```
 
-The same philosophy governs every stage: **multiple methodologically distinct candidate algorithms are proposed, implemented, and compared under a common evaluation protocol; the empirically strongest method is carried forward.**
-
-We do not claim any algorithm is optimal in advance — we demonstrate *why* a method was selected.
+Each stage follows strict principles:
+- **No Data Leakage**: Scalers, PCA bases, and clustering models are fit strictly unsupervised without accessing class labels.
+- **Labeling Policy**: Labels ($1 = \text{ictal}$, $0 = \text{interictal}$, $-1 = \text{ambiguous}$) are preserved strictly for post-hoc validation and visualization.
 
 ---
 
-## 2. Dataset
+## 2. Dataset & Local Layout
 
-**CHB-MIT Scalp EEG Database** — [PhysioNet](https://physionet.org/content/chbmit/1.0.0/), version 1.0.0.
+**CHB-MIT Scalp EEG Database** — [PhysioNet v1.0.0](https://physionet.org/content/chbmit/1.0.0/).
+- Pediatric scalp EEG recordings with expert seizure start/end time annotations.
+- Raw dataset resides locally under `data/raw/physionet.org/` (gitignored, raw EDFs are immutable).
 
-- Multichannel scalp EEG from pediatric patients with intractable epilepsy
-- EDF format, seizure annotations included
-- ~42.6 GB raw (large but manageable; never committed to Git)
-
-### Local layout
-
-The raw dataset lives at:
-
-```
-data/raw/physionet.org/
-```
-
-Raw data is **immutable**. All processing writes to `data/processed/`, never back to `data/raw/`.
-
-### Dataset audit (recorded channel counts)
-
-| Channels | Files |
-|---|---|
-| 22 | 26 |
-| 23 | 276 |
-| 24 | 54 |
-| 25 | 1 |
-| 28 | 275 |
-| 29 | 14 |
-| 31 | 1 |
-| 38 | 39 |
-
-**Special montage:** 3 recordings use unipolar/CS2-referenced channel names (e.g., `F7-CS2`, `T7-CS2`, `FP1-CS2`). These are **valid recordings, not corrupted data** — they are handled through a separate special-montage branch and tracked separately in benchmarks.
+### Subject CHB01 Metadata Summary
+- **Recordings**: 42 EDF files (~40.55 total hours recorded)
+- **Seizure Events**: 7 annotated seizure incidents total:
+  - `chb01_03`: 2996s–3036s (40s)
+  - `chb01_04`: 1467s–1494s (27s)
+  - `chb01_15`: 1732s–1772s (40s)
+  - `chb01_16`: 1015s–1066s (51s)
+  - `chb01_18`: 1720s–1810s (90s)
+  - `chb01_21`: 327s–420s (93s)
+  - `chb01_26`: 1862s–1963s (101s)
+- **Total Seizure Duration**: 442.0 seconds (7.37 minutes)
+- **Mean Seizure Duration**: 63.14 seconds
+- **Ictal Time Fraction**: 0.30% ($442\text{s} / 145,988\text{s}$)
 
 ---
 
-## 3. Project Architecture
+## 3. Repository Structure
 
 ```
 Data-Speaks/
-├── data/
-│   ├── raw/physionet.org/          ← CHB-MIT (gitignored)
-│   └── processed/
 ├── pipeline/
 │   ├── 01_preprocessing/
-│   │   ├── README.md               ← common preprocessing contract
-│   │   ├── baseline/
-│   │   ├── candidate_algorithms/
-│   │   │   ├── filtering/
-│   │   │   ├── artifact_removal/
-│   │   │   ├── normalization/
-│   │   │   └── resampling/
-│   │   └── evaluation/             ← shared evaluator
-│   ├── 02_segmentation/            ← README + candidates + evaluation
-│   ├── 03_feature_extraction/      ← time/frequency/statistical + evaluation
-│   ├── 04_dimensionality_reduction/← pca / svd / ica + evaluation
-│   ├── 05_clustering/              ← kmeans / hierarchical / dbscan + evaluation
-│   └── 06_classification/          ← LR / RF / SVM / KNN + evaluation
-├── notebooks/
-│   ├── 01_dataset_exploration.ipynb
-│   ├── 02_preprocessing_comparison.ipynb
-│   ├── 03_feature_analysis.ipynb
-│   ├── 04_dimensionality_reduction.ipynb
-│   ├── 05_clustering_comparison.ipynb
-│   └── 06_classification_comparison.ipynb
+│   │   ├── stage0.py                   ← Stage 0 standardization & parsing
+│   │   └── candidate_algorithms/
+│   │       ├── pipeline_c.py           ← Butterworth -> ASR -> FastICA -> Z-score
+│   │       └── pipeline_c_compat.py    ← ASRpy / NumPy 2.x compatibility patch
+│   ├── 02_segmentation/
+│   │   └── segmentation.py             ← 4.0s windowing (50% overlap, 1024 samples)
+│   ├── 03_feature_extraction/
+│   │   └── feature_extraction.py       ← 442 time/frequency/statistical features
+│   ├── 04_dimensionality_reduction/
+│   │   ├── dimensionality_reduction.py ← Feature isolation, StandardScaler, PCA
+│   │   └── test_dimensionality_reduction.py
+│   ├── 05_clustering/
+│   │   └── clustering.py               ← K-Means (k=2..6) & DBSCAN clustering
+│   ├── eda/
+│   │   └── run_midterm_eda.py          ← Midterm 5-Pillar EDA generation
+│   └── run_chb01_complete_batch.py    ← Master execution runner for patient chb01
 ├── results/
 │   ├── figures/
-│   ├── tables/
-│   └── benchmarks/
-├── reports/
-├── README.md
-├── requirements.txt
+│   │   ├── eda/                        ← 5-Pillar EDA figures (PNG)
+│   │   ├── pca/                        ← Scree plots & PC1 vs PC2 scatter plots
+│   │   └── clustering/                 ← K-Means & DBSCAN cluster overlays
+│   └── tables/
+│       ├── pipeline_c_chb01_metrics.csv
+│       ├── chb01_pca_variance.csv      ← Explained variance per component
+│       ├── chb01_pca_loadings.csv      ← Feature loading matrix
+│       ├── chb01_clustering_metrics.csv← Silhouette, ARI, NMI scores
+│       └── chb01_clustered_windows.csv ← Window metadata + cluster assignments
 ├── .gitignore
-└── LICENSE
+└── README.md
 ```
 
 ---
 
-## 4. The Six-Stage Pipeline
+## 4. Completed Pipeline Stages & Scientific Methodology
 
-Each stage follows the same cycle:
+### Stage 0 — Standardization & Quality Control
+- Selects the canonical 17 bipolar EEG channel montage:
+  `FP1-F7`, `F7-T7`, `T7-P7`, `P7-O1`, `FP1-F3`, `F3-C3`, `C3-P3`, `P3-O1`, `FP2-F4`, `F4-C4`, `C4-P4`, `P4-O2`, `FP2-F8`, `F8-T8`, `T8-P8`, `P8-O2`, `FZ-CZ`.
+- Removes non-EEG (ECG, VNS, dummy) channels.
+- Flags artifacts (`FLAT`, `CLIPPED`, `HIGH_VARIANCE`).
 
-```
-common standardized input
-  → candidate method A/B/C/D
-  → shared evaluation under identical conditions
-  → empirical selection of the winner
-  → winner feeds the next stage
-```
+### Pipeline C — Artifact Removal & Cleaning
+- **Bandpass Filter**: 4th-order Butterworth zero-phase filter (1–40 Hz).
+- **Artifact Subspace Reconstruction (ASR)**: Cutoff parameter $k=20.0$ on seizure-free calibration windows.
+- **FastICA**: Removes eye-movement (EOG) and muscle artifacts based on proxy channel correlations.
+- **Standardization**: Zero-mean, unit-variance scaling per channel.
 
-| Stage | Focus | Candidate families |
-|---|---|---|
-| 01 Preprocessing | Signal cleaning & standardization | FIR/Butterworth/Chebyshev filters, ICA, wavelets, ASR, robust scaling |
-| 02 Segmentation | Windowing | (to be designed) |
-| 03 Feature Extraction | Time / frequency / statistical features | (to be designed) |
-| 04 Dimensionality Reduction | Linear & subspace methods | PCA, SVD, ICA |
-| 05 Clustering | Unsupervised structure | K-Means, hierarchical, DBSCAN |
-| 06 Classification | Supervised discrimination | Logistic Regression, Random Forest, SVM, KNN |
+### Stage 02 — Segmentation
+- **Window Length**: 4.0 seconds (1024 samples at 256 Hz).
+- **Stride**: 2.0 seconds (50% overlap).
+- **Seizure Overlap Labeling**:
+  - `label = 1` (Ictal): $\ge 50\%$ window overlap with annotated seizure interval.
+  - `label = 0` (Interictal): $0\%$ overlap, outside boundary buffer.
+  - `label = -1` (Ambiguous): $< 50\%$ overlap.
 
-Each stage directory contains a `README.md` documenting the stage's **common contract** (inputs, outputs, parameters, policies), plus `candidate_algorithms/` (one folder per method) and a shared `evaluation/` (used by everyone — never customized to favor one implementation).
+### Stage 03 — Feature Extraction
+- **26 Features per Channel** $\times 17$ channels = **442 numerical features per window**:
+  - *Time-Domain*: Mean, variance, skewness, kurtosis, peak-to-peak amplitude, RMS, crest factor, zero-crossing rate, Hjorth activity/mobility/complexity.
+  - *Frequency-Domain*: Welch PSD absolute/relative power in 5 canonical bands ($\delta$: 1–4Hz, $\theta$: 4–8Hz, $\alpha$: 8–12Hz, $\beta$: 12–30Hz, $\gamma$: 30–40Hz), spectral edge frequency (SEF95), spectral entropy, peak frequency.
+- Extracted across **72,951 total windows** for patient `chb01`.
 
----
+### Stage 04 — Dimensionality Reduction (PCA)
+- Separates 7 metadata columns (`patient_id`, `recording_id`, `window_id`, `start_sec`, `end_sec`, `duration_sec`, `label`) from 442 EEG features.
+- Fits **ONE** `StandardScaler` and **ONE** `PCA` basis across the entire cohort matrix (unsupervised, no labels used).
+- Evaluates variance decomposition across thresholds.
 
-## 5. Common Stage 0 — Mandatory Standardization
+### Stage 05 — Unsupervised Clustering
+- Executes **K-Means** ($k=2..6$) and **DBSCAN** ($\epsilon=12.0, \text{MinPts}=15$) on the 95% variance PCA space (110 PCs).
+- Computes unsupervised Silhouette scores and post-hoc ground-truth alignment metrics (Adjusted Rand Index, Normalized Mutual Information, contingency crosstabs).
 
-Before any candidate preprocessing method is applied, **every** recording passes through the same shared Stage 0:
-
-```
-Raw EDF
-  → EDF integrity checks
-  → Annotation parsing
-  → Remove dummy / non-EEG channels
-  → Remove ECG, VNS, other auxiliary channels
-  → Standardized EEG channel selection
-  → Special montage detection
-  → Quality checks
-  → Standardized EEG input
-  → Candidate pipeline A/B/C/D
-```
-
-Stage 0 is **shared and immutable** across candidate pipelines. If team members used different channel policies or annotation interpretations, the preprocessing comparison would be invalid.
-
-### Common channel policy
-
-- Keep EEG channels; remove ECG, VNS, and dummy/non-EEG/auxiliary channels
-- Preserve original EEG channel names
-- Establish a canonical EEG channel set for standard-montage recordings
-- Missing channels are **not** automatically treated as corruption
-- No interpolation during Stage 0 unless explicitly justified later
-- CS2/unipolar recordings are handled in a separate branch, never silently forced into the standard montage
-
-### Common quality-control (QC) policy
-
-QC **flags** problems rather than deleting suspicious data:
-
-| Check | Detects |
-|---|---|
-| `FLAT` | nearly zero variance |
-| `HIGH_AMPLITUDE` | extreme values vs. robust channel distribution |
-| `HIGH_VARIANCE` | abnormally large window variance |
-| `HIGH_FREQ` | excessive muscle/electrical artifact |
-| `CLIPPED` | repeated min/max values |
-| `INVALID` | NaN/Inf or invalid numerical values |
-
-Valid status: `GOOD`. MNE-Python utilities may support detection, but the QC policy must remain explicit and documented in code — no undocumented defaults.
-
-### Common windowing policy
-
-- Window length: **4 s**; overlap: **50%**
-- Target sampling rate: **256 Hz** → `4 × 256 = 1024` samples per window
-- Identical for all pipelines and all downstream comparisons
-
-### Common seizure-labeling policy
-
-For each window, `seizure_overlap = duration(window ∩ seizure_interval)`:
-
-| Condition | Label |
-|---|---|
-| ≥ 50% overlap with a seizure interval | `1` (ictal) |
-| No overlap, sufficiently away from seizure boundaries | `0` (interictal) |
-| Overlaps a seizure but below the ictal threshold | `-1` (ambiguous, excluded from supervised training) |
-
-### Leakage prevention
-
-All supervised evaluation uses **patient-wise splits**:
-
-```
-Patients_train ∩ Patients_val = ∅
-Patients_train ∩ Patients_test = ∅
-Patients_val ∩ Patients_test = ∅
-```
-
-Windows from the same patient are never scattered across splits — adjacent windows are highly correlated, and patient-specific characteristics would otherwise inflate metrics.
+### Midterm 5-Pillar EDA
+1. **Pillar 1: Clinical & Metadata EDA**: Class imbalance (0.30% ictal time) and seizure duration profile.
+2. **Pillar 2: Time-Domain Statistical Moments**: Variance expansion and peak-to-peak amplitude surges during ictal windows.
+3. **Pillar 3: Frequency-Domain Spectral Power**: Relative spectral band power distribution across the 5 canonical bands ($\theta$ increase $\Delta=+0.143$, $\delta$ share decrease $\Delta=-0.051$).
+4. **Pillar 4: Time-Frequency STFT Spectrogram**: Short-time Fourier Transform transition across pre-ictal, ictal, and post-ictal states.
+5. **Pillar 5: Cross-Channel Spatial Correlation**: Cross-channel Pearson correlation matrix as a synchrony proxy ($r=0.151$ interictal vs $r=0.192$ ictal).
 
 ---
 
-## 6. Candidate Preprocessing Pipelines
+## 5. Summary of Results & Empirical Validation
 
-Four complete, methodologically distinct candidate pipelines are compared. *(4 substeps × 4 choices would be 256 combinations — we deliberately do **not** grid-search; we design four coherent pipelines.)*
+### PCA Variance Decomposition (72,951 Windows $\times$ 442 Features)
 
-### Pipeline A — Conservative / Classical *(reference baseline)*
-```
-FIR band-pass → ICA artifact removal → per-channel Z-score → 256 Hz
-```
-Controlled, linear-phase filtering; the most established multichannel EEG artifact-removal approach; simple, interpretable normalization.
+| Threshold | Principal Components Required | Feature Space Reduction |
+|---|:---:|:---:|
+| 80% Explained Variance | **35 PCs** | 92.1% reduction |
+| 90% Explained Variance | **73 PCs** | 83.5% reduction |
+| **95% Explained Variance** | **110 PCs** | **75.1% reduction** |
+| 99% Explained Variance | **217 PCs** | 50.9% reduction |
 
-### Pipeline B — Adaptive / Time-Frequency
-```
-Butterworth band-pass → Wavelet denoising → Robust scaling → 256 Hz (polyphase)
-```
-Wavelet denoising operates in a time-frequency representation (fundamentally different from ICA's independent-source decomposition); robust scaling handles transient extremes; polyphase resampling folds anti-alias filtering into resampling. *(Wavelet family and thresholding strategy must be specified before implementation.)*
+### Unsupervised Clustering Evaluation (110-PC Space)
 
-### Pipeline C — Subspace-Based / Aggressive
-```
-Butterworth band-pass → ASR → ICA → per-channel standardization → 256 Hz
-```
-ASR targets contaminated covariance subspaces via sliding-window PCA reconstruction — a strong mathematical match to the course content. **Caveat:** the ASR → ICA stacking is a candidate ordering to benchmark, not an assumed improvement; over-cleaning that removes seizure-relevant structure must be evaluated.
+| Algorithm | Clusters ($K$) | Silhouette Score | Adjusted Rand Index (ARI) | Normalized Mutual Info (NMI) |
+|---|:---:|:---:|:---:|:---:|
+| **K-Means ($k=2$)** | 2 | **0.3142** | 0.0018 | 0.0031 |
+| K-Means ($k=3$) | 3 | 0.2709 | 0.0022 | 0.0034 |
+| K-Means ($k=4$) | 4 | 0.2315 | 0.0025 | 0.0040 |
+| K-Means ($k=5$) | 5 | 0.2180 | 0.0028 | 0.0046 |
+| K-Means ($k=6$) | 6 | 0.1954 | 0.0031 | 0.0049 |
+| **DBSCAN** | 1 (118 noise) | 0.4105 | 0.0001 | 0.0012 |
 
-### Pipeline D — Lightweight / Statistical
-```
-Chebyshev Type II band-pass → robust statistical artifact detection → per-channel standardization → decimation
-```
-Tests whether sophisticated artifact-removal justifies its computational cost. Final decimation factor fixed before comparison.
-
-### How pipelines are compared
-
-**Level 1 — Intrinsic quality:** artifact suppression, signal/spectral/waveform preservation, SNR under controlled synthetic contamination, runtime, memory.
-
-**Level 2 — Downstream usefulness:** identical segmentation, features, models, patient-wise splits, and metrics — **only** the preprocessing varies.
-
-Winner is **never** chosen on raw classification accuracy alone, and never on a tiny numerical difference without statistical consideration (per-patient metrics + paired tests / bootstrap CIs).
+> **Key Insight:** Unsupervised clustering naturally groups windows by background physiological state (e.g. sleep/wake states, baseline amplitude drift) rather than class labels, highlighting the extreme class imbalance ($99.70\%$ interictal vs $0.30\%$ ictal) inherent to continuous scalp EEG recordings.
 
 ---
 
-## 7. Team Collaboration Conventions
+## 6. How to Run the Code
 
-- **Everyone learns the full pipeline** — no one is permanently siloed into one algorithm.
-- Each member implements one **complete** candidate pipeline (filtering → artifact removal → normalization → resampling) from the shared Stage 0 input.
-- All evaluation uses the **shared evaluator** under identical conditions.
-- Independent implementations append author initials to filenames to avoid merge conflicts:
-  ```
-  butterworth_AT.py
-  wavelet_RK.py
-  ica_AS.py
-  ```
-- Raw dataset and generated processed data are **never** committed (see `.gitignore`). Only small, deliberate artifacts may be committed when needed.
-- Empty structural directories are kept in Git via `.gitkeep` files.
-
----
-
-## 8. Evaluation Philosophy
-
-1. Raw data is immutable.
-2. All team members use the same Stage 0.
-3. All candidate pipelines receive identical standardized input.
-4. All pipelines use the same windowing and labeling policy.
-5. All supervised evaluation uses patient-wise splitting.
-6. Never compare pipelines with different downstream classifiers or feature sets.
-7. Never choose algorithms based only on visual appearance.
-8. Never declare a winner on tiny numerical differences without statistics.
-9. Never assume more aggressive preprocessing is better.
-10. Never process the full dataset until the pipeline is validated on representative recordings.
-11. Document every parameter and decision.
-12. Treat the three CS2-reference recordings separately — they are not corrupted.
-
-Real EEG has no perfectly clean ground truth, so intrinsic evaluation combines real-data inspection, spectral/waveform preservation analysis, QC metrics, **controlled synthetic contamination** (where an approximate clean reference exists), and downstream validation. *Visual smoothness ≠ better preprocessing.*
-
----
-
-## 9. Repository Maintenance Notes
-
-- **GitHub repo maintainer:** Pipeline A owner (repo admin duties — PR reviews, branch hygiene, releases).
-- `.gitignore` must exclude:
-  ```
-  data/raw/
-  data/processed/
-  *.edf
-  __pycache__/
-  .ipynb_checkpoints/
-  ```
-- Empty folders (e.g., `pipeline/01_preprocessing/evaluation/`, `results/figures/`) are tracked with `.gitkeep`.
-- Every stage has exactly one shared `README.md` (the contract) and one shared `evaluation/` — changes to these require team agreement, not unilateral edits.
-
----
-
-## 10. Getting Started
+### Environment Setup
 
 ```bash
-# 1. Clone
+# Clone the repository
 git clone https://github.com/<org>/Data-Speaks.git
 cd Data-Speaks
 
-# 2. Environment
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-
-# 3. Dataset (not in Git — download separately)
-# Place CHB-MIT under data/raw/physionet.org/ preserving the PhysioNet layout
-
-# 4. Explore
-jupyter notebook notebooks/01_dataset_exploration.ipynb
+# Run regression test to verify PCA API signature
+python pipeline/run_chb01_complete_batch.py --test
 ```
 
-Core dependencies: `mne`, `numpy`, `scipy`, `pandas`, `scikit-learn`, `matplotlib`, `seaborn`, `pyedflib` (see `requirements.txt`).
+### Execution Options
+
+The master batch runner `pipeline/run_chb01_complete_batch.py` supports modular execution passes:
+
+#### Option A: Full End-to-End Pipeline Run (All 42 EDFs)
+```bash
+python pipeline/run_chb01_complete_batch.py
+```
+
+#### Option B: Standalone Pass Runs (Resume from saved CSV tables)
+```bash
+# Run Pass 2 (PCA) on existing master feature matrix
+python pipeline/run_chb01_complete_batch.py --pass2-only
+
+# Run Pass 3 (Unsupervised Clustering) on existing PCA-reduced matrix
+python pipeline/run_chb01_complete_batch.py --pass3-only
+
+# Run Pass 4 (Midterm 5-Pillar EDA) on existing feature matrix
+python pipeline/run_chb01_complete_batch.py --pass4-only
+```
 
 ---
 
-## 11. Current Status & Roadmap
+## 7. Repository Hygiene & Git Policies
 
-**Current stage:** Project architecture & preprocessing methodology design ✅ (repo scaffold, pipeline definitions, common policies finalized)
-
-**Next steps:**
-
-- [ ] Write `pipeline/01_preprocessing/README.md` (the formal common contract)
-- [ ] Implement shared **Stage 0** (EDF integrity, annotation parsing, channel standardization, special-montage detection, QC, metadata generation)
-- [ ] Dataset-wide audit → master `metadata.csv`
-- [ ] Select ~6 representative benchmark recordings (+ 3 CS2 recordings as a separate special-case set)
-- [ ] Implement candidate pipelines A–D on the benchmark
-- [ ] Pilot comparison (waveform, PSD, artifact suppression, runtime, size)
-- [ ] Freeze pipeline definitions → scale to the full dataset
-- [ ] Proceed through stages 02–06 with the same candidate→evaluate→select cycle
+- **Git Exclusions**: Raw EDF files (`data/raw/`), large intermediate window feature tables (`results/tables/chb01_all_features.csv`, `chb01_pca_reduced.csv`, `chb01_features_by_recording/`), and log files are excluded in `.gitignore` to keep git operations lightweight and comply with GitHub file size limits (<100MB).
+- **Tracked Artifacts**: All pipeline scripts, lightweight summary CSV tables (`chb01_pca_variance.csv`, `chb01_clustering_metrics.csv`, `chb01_clustered_windows.csv`), and generated high-resolution PNG figures in `results/figures/` are tracked in version control.
 
 ---
 
-## 12. References
+## 8. References
 
-- **Oppenheim & Schafer** — *Discrete-Time Signal Processing* (primary DSP theory)
-- **Nunez & Srinivasan** — *Electric Fields of the Brain* (EEG-specific theory)
-- **Goldberger et al.** — *PhysioBank, PhysioToolkit, and PhysioNet* (CHB-MIT source)
-- **MNE-Python documentation** — practical EEG implementation
-- Project reports → `reports/`
+- **Goldberger et al.** — *PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiological Signals* (CHB-MIT Database).
+- **Oppenheim & Schafer** — *Discrete-Time Signal Processing* (DSP fundamentals).
+- **Nunez & Srinivasan** — *Electric Fields of the Brain: The Neurophysics of EEG*.
+- **MNE-Python Development Team** — *MNE Software for Processing Meg and EEG Data*.
 
 ---
 
-*Data-Speaks — a course project by the Mathematics and Computing team, IIT Dharwad.*
+*Data-Speaks — Course project by the Department of Mathematics and Computing, IIT Dharwad.*

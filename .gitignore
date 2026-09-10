@@ -1,3 +1,12 @@
+# Large generated dataset CSVs (>100MB limit on GitHub)
+results/tables/chb01_all_features.csv
+results/tables/chb01_pca_reduced.csv
+results/tables/chb01_features_by_recording/
+
+# Execution Logs
+*.log
+chb01_batch_run.log
+
 # Byte-compiled / optimized files
 __pycache__/
 *.py[cod]
