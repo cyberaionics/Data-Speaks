@@ -206,7 +206,6 @@ chbmit_pipeline_approach4/
 ├── README.md                                  <- Comprehensive project guide & roadmap
 ├── approach4_pipeline.py                      <- Modular preprocessing library (Chebyshev II, Decimation, Artifacts)
 ├── run_pipeline_chb01.py                      <- Execution and benchmarking script on chb01
-├── make_notebook.py                           <- Automated generator for assignment notebook
 ├── Approach4_CHB01_Preprocessing_EDA.ipynb    <- Primary Jupyter Notebook deliverable for midterm
 │
 ├── output/
