@@ -1,0 +1,4 @@
+recording_id,duration_hours,raw_size_mb,processed_size_mb,orig_sfreq,final_sfreq,seizure_count,total_epochs,seizure_epochs,clean_epochs,artifact_epochs,artifact_pct,filter_time_sec,decimate_time_sec,total_time_sec,speedup_vs_realtime
+chb01_03.edf,1.0,40.44,15.82,256.0,128.0,1,1799,21,1788,11,0.61,0.331,0.338,0.899,4002.4
+chb01_01.edf,1.0,40.44,15.82,256.0,128.0,0,1799,0,1424,375,20.84,0.334,0.351,0.927,3883.5
+chb01_04.edf,1.0,40.44,15.82,256.0,128.0,1,1799,14,1754,45,2.5,0.549,0.677,1.657,2172.5
