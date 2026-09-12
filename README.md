@@ -320,6 +320,25 @@ PCA and spectral-shift reports are written to `results/figures/` by:
 uv run python scripts/math_report.py --patient chb01
 ```
 
+Prediction-focused interpretation figures are generated with:
+
+```bash
+uv run python scripts/plot_results.py --patient chb01 --model logistic_regression
+```
+
+This creates:
+
+- `<patient>_class_balance.png`: total and per-record ictal/interictal windows.
+- `<patient>_model_comparison.png`: sensitivity, false detections, and latency
+	across completed model benchmarks.
+- `<patient>_<model>_confusion_matrix.png`: aggregate window predictions where
+	saved prediction arrays are available.
+- `<patient>_<model>_<record>_timeline.png`: true labels, predictions, and
+	annotated seizure intervals over time.
+
+Use `--record chb01_03` to select a particular seizure-containing recording
+for the timeline plot.
+
 ## Reproducibility and Team Comparison
 
 Team algorithms are comparable only when they use the same:
