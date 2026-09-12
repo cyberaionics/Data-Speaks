@@ -1,0 +1,273 @@
+{
+  "model": "knn",
+  "patient": "chb01",
+  "summary": {
+    "n_records": 42,
+    "n_seizure_records": 7,
+    "n_nonseizure_records": 35,
+    "sensitivity_mean": 0.8571428571428571,
+    "latency_sec_mean": 2.1666666666666665,
+    "fdr_per_24h_mean": 1.3714285714285714
+  },
+  "records": [
+    {
+      "test_record": "chb01_01",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_02",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_03",
+      "n_windows": 883,
+      "n_events": 1,
+      "sensitivity": 1.0,
+      "latency_sec": 4.0
+    },
+    {
+      "test_record": "chb01_04",
+      "n_windows": 883,
+      "n_events": 1,
+      "sensitivity": 1.0,
+      "latency_sec": 1.0
+    },
+    {
+      "test_record": "chb01_05",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_06",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_07",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_08",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_09",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_10",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_11",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_12",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_13",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_14",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_15",
+      "n_windows": 883,
+      "n_events": 0,
+      "sensitivity": 0.0,
+      "latency_sec": null
+    },
+    {
+      "test_record": "chb01_16",
+      "n_windows": 883,
+      "n_events": 1,
+      "sensitivity": 1.0,
+      "latency_sec": 1.0
+    },
+    {
+      "test_record": "chb01_17",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_18",
+      "n_windows": 883,
+      "n_events": 1,
+      "sensitivity": 1.0,
+      "latency_sec": 0.0
+    },
+    {
+      "test_record": "chb01_19",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_20",
+      "n_windows": 665,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_21",
+      "n_windows": 883,
+      "n_events": 2,
+      "sensitivity": 1.0,
+      "latency_sec": 1.0
+    },
+    {
+      "test_record": "chb01_22",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_23",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_24",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_25",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_26",
+      "n_windows": 564,
+      "n_events": 2,
+      "sensitivity": 1.0,
+      "latency_sec": 6.0
+    },
+    {
+      "test_record": "chb01_27",
+      "n_windows": 149,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_29",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_30",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_31",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_32",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_33",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_34",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_36",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_37",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_38",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_39",
+      "n_windows": 899,
+      "n_events": 1,
+      "fdr_per_24h": 24.0
+    },
+    {
+      "test_record": "chb01_40",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_41",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_42",
+      "n_windows": 899,
+      "n_events": 1,
+      "fdr_per_24h": 24.0
+    },
+    {
+      "test_record": "chb01_43",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb01_46",
+      "n_windows": 899,
+      "n_events": 0,
+      "fdr_per_24h": 0.0
+    }
+  ]
+}
