@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 import numpy as np
 
 ICTAL_OVERLAP = 0.5
@@ -6,18 +7,34 @@ BOUNDARY_MARGIN_SEC = 30.0
 
 
 def parse_seizure_file(edf_path):
-    p = Path(edf_path).with_suffix(".seizure")
-    if not p.exists():
+    edf_path = Path(edf_path)
+    text_annotation = edf_path.with_suffix(".seizure")
+    if text_annotation.exists():
+        out = []
+        for line in text_annotation.read_text().splitlines():
+            toks = line.strip().split()
+            if len(toks) >= 2:
+                try:
+                    out.append((float(toks[0]), float(toks[1])))
+                except ValueError:
+                    continue
+        return out
+
+    summary_path = edf_path.parent / f"{edf_path.parent.name}-summary.txt"
+    if not summary_path.exists():
         return []
-    out = []
-    for line in p.read_text().splitlines():
-        toks = line.strip().split()
-        if len(toks) >= 2:
-            try:
-                out.append((float(toks[0]), float(toks[1])))
-            except ValueError:
-                continue
-    return out
+
+    match = re.search(
+        rf"File Name: {re.escape(edf_path.name)}\s+(.*?)(?=\nFile Name:|\Z)",
+        summary_path.read_text(),
+        flags=re.DOTALL,
+    )
+    if not match:
+        return []
+
+    starts = re.findall(r"Seizure Start Time:\s*([0-9.]+)", match.group(1))
+    ends = re.findall(r"Seizure End Time:\s*([0-9.]+)", match.group(1))
+    return [(float(start), float(end)) for start, end in zip(starts, ends)]
 
 
 def label_windows(starts, epoch_sec, W, seizures, margin = BOUNDARY_MARGIN_SEC):

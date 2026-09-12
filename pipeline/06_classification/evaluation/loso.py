@@ -12,7 +12,7 @@ def leave_one_record_out(records, model_train, model_predict):
         if not X_tr:
             continue
         X_tr=np.vstack(X_tr)
-        y_tr=np.vstack(y_tr)
+        y_tr=np.hstack(y_tr)
         if len(np.unique(y_tr)) < 2:
             continue
         clf, scaler = model_train(X_tr, y_tr)
