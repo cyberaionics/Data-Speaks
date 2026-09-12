@@ -19,6 +19,6 @@ def hjorth_for_stacked(stacked):
     n, W, c, _ = stacked.shape
     X = np.empty((n, W * c * 2), dtype = np.float32)
     for i in range(n):
-        chunks = [hjorth_features(stacked[i, w]).flatten for w in range(W)]
+        chunks = [hjorth_features(stacked[i, w]).flatten() for w in range(W)]
         X[i] = np.concatenate(chunks)
     return X

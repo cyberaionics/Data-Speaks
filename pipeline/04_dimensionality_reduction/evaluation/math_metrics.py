@@ -5,7 +5,7 @@ def cluster_separation(Z, y):
     valid = y != -1
     if len(np.unique(y[valid])) < 2:
         return None
-    return float(silhouetter_score(Z[valid], y[valid]))
+    return float(silhouette_score(Z[valid], y[valid]))
 
 
 def band_power_shift(X, y, n_channels = 18, n_bands = 8, W = 3):

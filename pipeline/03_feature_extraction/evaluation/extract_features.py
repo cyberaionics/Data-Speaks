@@ -5,8 +5,8 @@ from statistical.basic_stats import stats_for_stacked
 
 FEATURE_SETS = {
     "spectral" : lambda st, sf: spectral(st, sf),
-    "hjorth" : lambda st, sf: hjorth_for_stacked(st, sf),
-    "stats" : lambda st, sf: stats_for_stacked(st, sf)
+    "hjorth" : lambda st, sf: hjorth_for_stacked(st),
+    "stats" : lambda st, sf: stats_for_stacked(st)
 }
 
 

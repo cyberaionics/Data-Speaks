@@ -6,7 +6,7 @@ BANDS_HI_HZ = 25.0
 
 
 def _band_edges():
-    edges = np.linspace(BANDS_LO_HZ, BANDS_LO_HZ, N_BANDS + 1)
+    edges = np.linspace(BANDS_LO_HZ, BANDS_HI_HZ, N_BANDS + 1)
     return list(zip(edges[:-1], edges[1:]))
 
 

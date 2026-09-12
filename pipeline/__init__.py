@@ -15,6 +15,7 @@ _SUBPATHS = [
     "02_segmentation/candidate_algorithms",
     "02_segmentation/evaluation",
 
+    "03_feature_extraction",
     "03_feature_extraction/time_domain",
     "03_feature_extraction/frequency_domain",
     "03_feature_extraction/statistical",
@@ -41,5 +42,5 @@ for _sub in _SUBPATHS:
     _p = _PIPELINE_ROOT / _sub
     if _p.exists():
         _s = str(_p)
-        if _s not in sys.path():
+        if _s not in sys.path:
             sys.path.insert(0, _s)

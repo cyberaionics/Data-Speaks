@@ -11,7 +11,7 @@ def segment_epochs(data, sfreq, epoch_sec = EPOCH_SEC):
     starts = np.empty(n_epochs, dtype = np.float32)
     for i in range(n_epochs):
         s = i * n
-        epoch[i] = data[:, s:s + n]
+        epochs[i] = data[:, s:s + n]
         starts[i] = s / sfreq
     return epochs, starts
 

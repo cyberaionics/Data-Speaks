@@ -16,7 +16,7 @@ def run_pipeline(raw_std, recording_id = None, return_metadata = True):
     prov["steps"].append(p2)
 
     raw, stats = zscore_normalize_raw(raw)
-    prov[steps].append({"step":"normalization", "type":"per-channel z-score", "mean_per_channel":stats["mean"].tolist(), "std_per_channel":stats["std"].tolist()})
+    prov["steps"].append({"step":"normalization", "type":"per-channel z-score", "mean_per_channel":stats["mean"].tolist(), "std_per_channel":stats["std"].tolist()})
 
     raw, p4 = resample_to_256(raw)
     prov["steps"].append(p4)
