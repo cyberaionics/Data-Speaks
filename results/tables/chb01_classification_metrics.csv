@@ -1,0 +1,5 @@
+model,accuracy_mean,accuracy_std,precision_mean,precision_std,recall_sensitivity_mean,recall_sensitivity_std,specificity_mean,specificity_std,f1_mean,f1_std,roc_auc_mean,roc_auc_std,pr_auc_mean,pr_auc_std,n_folds_with_positives
+LinearSVM,0.9961,0.0009,0.3498,0.1932,0.6548,0.3102,0.9971,0.001,0.4327,0.2154,0.9597,0.0331,0.5725,0.3077,5
+LR,0.9961,0.001,0.3596,0.197,0.6592,0.2793,0.9971,0.0012,0.4393,0.2025,0.9653,0.0277,0.573,0.2985,5
+RF,0.9974,0.0021,0.6,0.5477,0.2065,0.2542,1.0,0.0,0.2858,0.3361,0.9467,0.0623,0.631,0.3799,5
+KNN,0.9984,0.0011,0.7571,0.4333,0.4622,0.3551,0.9999,0.0001,0.539,0.3687,0.8132,0.1848,0.5702,0.4016,5
