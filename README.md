@@ -160,7 +160,7 @@ Data-Speaks/
 - **Stride**: 2.0 seconds (50% overlap).
 - **Seizure Overlap Labeling**:
   - `label = 1` (Ictal): $\ge 50\%$ window overlap with annotated seizure interval.
-  - `label = 0` (Interictal): $0\%$ overlap, outside boundary buffer.
+  - `label = 0` (Interictal): $0\%$ overlap.
   - `label = -1` (Ambiguous): $< 50\%$ overlap (excluded from classification).
 
 ### Stage 03 — Feature Extraction
@@ -211,16 +211,20 @@ Data-Speaks/
 
 ### Unsupervised Clustering Evaluation (110-PC Space)
 
+Data source: [`results/tables/chb01_clustering_metrics.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_clustering_metrics.csv)
+
 | Algorithm | Clusters ($K$) | Silhouette Score | Adjusted Rand Index (ARI) | Normalized Mutual Info (NMI) |
 |---|:---:|:---:|:---:|:---:|
-| **K-Means ($k=2$)** | 2 | **0.3142** | 0.0018 | 0.0031 |
-| K-Means ($k=3$) | 3 | 0.2709 | 0.0022 | 0.0034 |
-| K-Means ($k=4$) | 4 | 0.2315 | 0.0025 | 0.0040 |
-| K-Means ($k=5$) | 5 | 0.2180 | 0.0028 | 0.0046 |
-| K-Means ($k=6$) | 6 | 0.1954 | 0.0031 | 0.0049 |
-| **DBSCAN** | 1 (118 noise) | 0.4105 | 0.0001 | 0.0012 |
+| **K-Means ($k=2$)** | 2 | **0.1527** | 0.0034 | 0.0040 |
+| **K-Means ($k=3$)** | 3 | 0.1438 | 0.0027 | 0.0035 |
+| **K-Means ($k=4$)** | 4 | 0.1335 | 0.0026 | 0.0057 |
+| **K-Means ($k=5$)** | 5 | 0.1376 | 0.0034 | 0.0056 |
+| **K-Means ($k=6$)** | 6 | 0.1109 | 0.0027 | 0.0056 |
+| **DBSCAN ($\epsilon=12.0, \text{MinPts}=15$)** | 4 | 0.1003 | **0.0061** | **0.0102** |
 
 ### Supervised Classification Evaluation (5-Fold GroupKFold by `recording_id`)
+
+Data source: [`results/tables/chb01_classification_metrics.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_classification_metrics.csv)
 
 | Model | PR-AUC (Primary) | F1 Score | Recall / Sensitivity | Specificity | ROC-AUC | Accuracy |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|

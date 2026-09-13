@@ -1,6 +1,6 @@
 # Stage 05: Unsupervised Clustering
 
-Stage 05 investigates whether unsupervised grouping algorithms (such as K-Means and DBSCAN) operating on the 100-dimensional PCA representation of continuous EEG (`chb01_03_pca_reduced.csv`, 95% cumulative variance) can naturally separate seizure dynamics from interictal background EEG **without using ground-truth labels**.
+Stage 05 investigates whether unsupervised grouping algorithms (such as K-Means and DBSCAN) operating on the reduced PCA representation of continuous EEG can naturally separate seizure dynamics from interictal background EEG **without using ground-truth labels**.
 
 ---
 
@@ -16,7 +16,7 @@ Evaluated for:
 
 ### DBSCAN (Density-Based Spatial Clustering of Applications with Noise)
 Groups points with dense neighborhoods ($N_\epsilon(p) \ge \text{MinPts}$) and marks sparse points as outliers / noise (label $-1$).
-- Tested with $\epsilon = 10.0$ and $\text{MinPts} = 8$ to evaluate if rare ictal events (21 windows out of 1,799) present as isolated anomalous clusters or density outliers.
+- Tested with $\epsilon = 12.0$ and $\text{MinPts} = 15$ on the full cohort PCA space to evaluate if rare ictal events present as isolated density outliers.
 
 ---
 
@@ -30,47 +30,67 @@ All clusterings were executed strictly unsupervised. Post-hoc comparisons agains
 
 ---
 
-## 3. Results on Real Data (`chb01_03`)
+## 3. Empirical Results
 
-| Algorithm | Clusters | Silhouette Score | Adjusted Rand Index (ARI) | Normalized Mutual Info (NMI) |
+### Full Subject CHB01 Cohort ($72,951$ Windows, 110-PC Space)
+
+Data source: [`results/tables/chb01_clustering_metrics.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_clustering_metrics.csv)
+
+| Algorithm | Clusters ($K$) | Silhouette Score | Adjusted Rand Index (ARI) | Normalized Mutual Info (NMI) |
 |---|:---:|:---:|:---:|:---:|
-| **K-Means ($k=2$)** | 2 | 0.1830 | **-0.0010** | **0.0038** |
-| **K-Means ($k=3$)** | 3 | 0.1867 | 0.0131 | 0.0264 |
-| **K-Means ($k=4$)** | 4 | **0.1983** | 0.0221 | 0.0688 |
-| **K-Means ($k=5$)** | 5 | 0.1747 | 0.0159 | 0.0556 |
-| **K-Means ($k=6$)** | 6 | 0.1357 | 0.0098 | 0.0467 |
-| **DBSCAN ($\epsilon=10, \text{MinPts}=8$)** | 1 (+ noise) | 0.0070 | -0.0100 | 0.0018 |
+| **K-Means ($k=2$)** | 2 | **0.1527** | 0.0034 | 0.0040 |
+| **K-Means ($k=3$)** | 3 | 0.1438 | 0.0027 | 0.0035 |
+| **K-Means ($k=4$)** | 4 | 0.1335 | 0.0026 | 0.0057 |
+| **K-Means ($k=5$)** | 5 | 0.1376 | 0.0034 | 0.0056 |
+| **K-Means ($k=6$)** | 6 | 0.1109 | 0.0027 | 0.0056 |
+| **DBSCAN ($\epsilon=12.0, \text{MinPts}=15$)** | 4 | 0.1003 | **0.0061** | **0.0102** |
 
-### Cluster vs. True Label Contingency ($k=2$)
-```
-True Label:     Normal (0)    Seizure (1)
-Cluster 0:         851             5
-Cluster 1:         927            16
-```
+### Single Recording Benchmark (`chb01_03`, $1,799$ Windows, 100-PC Space)
+
+Data source: [`results/tables/chb01_03_clustering_metrics.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_03_clustering_metrics.csv)
+
+| Algorithm | Clusters ($K$) | Silhouette Score | Adjusted Rand Index (ARI) | Normalized Mutual Info (NMI) |
+|---|:---:|:---:|:---:|:---:|
+| **K-Means ($k=2$)** | 2 | 0.1830 | -0.0010 | 0.0038 |
+| K-Means ($k=3$) | 3 | 0.1867 | 0.0131 | 0.0264 |
+| K-Means ($k=4$) | 4 | **0.1983** | 0.0221 | 0.0688 |
+| K-Means ($k=5$) | 5 | 0.1747 | 0.0159 | 0.0556 |
+| K-Means ($k=6$) | 6 | 0.1357 | 0.0098 | 0.0467 |
+| **DBSCAN ($\epsilon=10, \text{MinPts}=8$)** | 1 (+ noise) | 0.0070 | -0.0100 | 0.0018 |
 
 ---
 
-## 4. Key Scientific Insights for Midterm Report
+## 4. Key Scientific Insights
 
 1. **Unsupervised K-Means does NOT separate seizures from background EEG**:
-   - For $k=2$, the cluster partition roughly bisects the 1,778 normal windows (851 in Cluster 0 vs 927 in Cluster 1).
-   - Seizure windows (21 total) are split across both clusters (5 in Cluster 0, 16 in Cluster 1).
-   - The Adjusted Rand Index ($\text{ARI} = -0.0010$) and $\text{NMI} = 0.0038$ are approximately zero.
-2. **Why this occurs (The Scientific Story)**:
-   - **Extreme class imbalance ($< 1\%$)**: In 1 hour of recording, seizures represent only 1.17% of windows (21 out of 1,799). K-Means variance minimization is overwhelmed by the continuous state variations in the background EEG (sleep stages, blinking, postural shifts).
-   - **Hyper-spherical assumption**: K-Means assumes isotropic, balanced clusters. A tiny 21-sample cluster cannot drive a global Voronoi partition in 100-dimensional space.
+   - For $k=2$, the cluster partitions group background physiological states (e.g. sleep/wake transitions, baseline amplitude shifts) rather than class labels.
+   - Seizure windows are split across clusters in proportions reflecting background density.
+   - Adjusted Rand Index ($\text{ARI} = 0.0034$) and $\text{NMI} = 0.0040$ are near zero.
+2. **Why this occurs**:
+   - **Extreme class imbalance ($0.30\%$)**: In continuous recordings, seizures represent only 0.30% of windows. K-Means variance minimization is dominated by continuous state variations in the 99.70% interictal background.
+   - **Hyper-spherical assumption**: K-Means assumes isotropic, balanced clusters. A tiny 226-sample positive class out of 72,951 windows cannot form a standalone Voronoi partition in 110-dimensional space.
 3. **Conclusion for the Pipeline**:
-   - This empirically demonstrates that **unsupervised clustering alone is insufficient for automated seizure detection** and rigorously justifies the necessity of supervised discrimination (Stage 06 Classification) or dedicated anomaly detection.
+   - Empirically demonstrates that **unsupervised clustering alone is insufficient for automated seizure detection** and rigorously justifies the necessity of supervised classification (Stage 06) or dedicated anomaly detection algorithms.
 
 ---
 
 ## 5. Generated Artifacts
 
-- **Cluster Metrics Summary Table**:
-  [`results/tables/chb01_03_clustering_metrics.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_03_clustering_metrics.csv)
+- **Cluster Metrics Summary Tables**:
+  - `results/tables/chb01_clustering_metrics.csv` (72,951 cohort)
+  - `results/tables/chb01_03_clustering_metrics.csv` (1,799 benchmark)
 - **Window-level Cluster Assignments**:
-  [`results/tables/chb01_03_clustered_windows.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_03_clustered_windows.csv)
+  - `results/tables/chb01_clustered_windows.csv`
 - **Figures** (in [`results/figures/clustering/`](file:///C:/Users/Kavya/Data-Speaks/results/figures/clustering/)):
   - `kmeans_k2_clusters.png`: K-Means 2-cluster partition side-by-side with ground truth.
   - `kmeans_elbow_silhouette.png`: WCSS elbow curve and silhouette score profile for $k=2..6$.
   - `dbscan_clusters.png`: Density-based outlier detection projection.
+
+---
+
+## 6. Usage & Execution
+
+```powershell
+# Run standalone clustering pass on existing PCA matrix
+C:\Users\Kavya\anaconda3\python.exe pipeline/run_chb01_complete_batch.py --pass3-only
+```
