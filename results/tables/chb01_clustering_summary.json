@@ -1,0 +1,33 @@
+{
+  "patient": "chb01",
+  "n_windows": 6000,
+  "n_ictal": 12,
+  "n_interictal": 5988,
+  "kmeans": {
+    "silhouette": 0.9893783330917358,
+    "cluster_sizes": {
+      "0": 5999,
+      "1": 1
+    },
+    "ictal_share": {
+      "0": 0.0020003333888981498,
+      "1": 0.0
+    }
+  },
+  "hierarchical": {
+    "silhouette": 0.9893783330917358,
+    "cluster_sizes": {
+      "0": 5999,
+      "1": 1
+    },
+    "ictal_share": {
+      "0": 0.0020003333888981498,
+      "1": 0.0
+    }
+  },
+  "dbscan": {
+    "silhouette": null,
+    "noise_points": 6000,
+    "cluster_sizes": {}
+  }
+}

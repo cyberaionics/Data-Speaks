@@ -1,0 +1,70 @@
+{
+  "patient": "chb01",
+  "model": "random_forest_regressor",
+  "n_train": 6400,
+  "n_test": 1600,
+  "mae": 0.0039465757275132275,
+  "r2": 0.2596587317276532,
+  "top_features": [
+    {
+      "feature_index": 291,
+      "importance": 0.1291441082808184,
+      "mean_ictal": 173054.390625,
+      "mean_interictal": 18418.162109375
+    },
+    {
+      "feature_index": 13,
+      "importance": 0.09062024809780009,
+      "mean_ictal": 1043377.4375,
+      "mean_interictal": 79265.5859375
+    },
+    {
+      "feature_index": 273,
+      "importance": 0.07753327442336659,
+      "mean_ictal": 1006123.6875,
+      "mean_interictal": 84898.0703125
+    },
+    {
+      "feature_index": 149,
+      "importance": 0.06336556267540364,
+      "mean_ictal": 970167.5625,
+      "mean_interictal": 78850.2734375
+    },
+    {
+      "feature_index": 285,
+      "importance": 0.047375316109900784,
+      "mean_ictal": 1054677.75,
+      "mean_interictal": 79158.7578125
+    },
+    {
+      "feature_index": 19,
+      "importance": 0.0418737424963824,
+      "mean_ictal": 170571.109375,
+      "mean_interictal": 18420.30859375
+    },
+    {
+      "feature_index": 276,
+      "importance": 0.041384670024200605,
+      "mean_ictal": 754484.5625,
+      "mean_interictal": 71816.4375
+    },
+    {
+      "feature_index": 274,
+      "importance": 0.03319358593955942,
+      "mean_ictal": 669454.5625,
+      "mean_interictal": 84520.34375
+    },
+    {
+      "feature_index": 148,
+      "importance": 0.03146930793731089,
+      "mean_ictal": 777127.5625,
+      "mean_interictal": 81960.1015625
+    },
+    {
+      "feature_index": 136,
+      "importance": 0.016794419413935877,
+      "mean_ictal": 901132.5625,
+      "mean_interictal": 81099.71875
+    }
+  ]
+}

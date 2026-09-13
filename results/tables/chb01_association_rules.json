@@ -1,0 +1,91 @@
+{
+  "patient": "chb01",
+  "sample_size": 36343,
+  "base_ictal_rate": 0.0030817488924964917,
+  "rules": [
+    {
+      "feature_index": 272,
+      "support_ictal": 0.0030817488924964917,
+      "confidence": 0.0061633281972265025,
+      "lift": 1.9999449702839533,
+      "threshold": 38986.890625
+    },
+    {
+      "feature_index": 285,
+      "support_ictal": 0.0030542332773849158,
+      "confidence": 0.006108298481179837,
+      "lift": 1.982088318763561,
+      "threshold": 42285.7890625
+    },
+    {
+      "feature_index": 275,
+      "support_ictal": 0.0030542332773849158,
+      "confidence": 0.006108298481179837,
+      "lift": 1.982088318763561,
+      "threshold": 46566.9140625
+    },
+    {
+      "feature_index": 149,
+      "support_ictal": 0.0030542332773849158,
+      "confidence": 0.006108298481179837,
+      "lift": 1.982088318763561,
+      "threshold": 42572.9375
+    },
+    {
+      "feature_index": 273,
+      "support_ictal": 0.0030267176622733403,
+      "confidence": 0.006053268765133172,
+      "lift": 1.9642316672431686,
+      "threshold": 49051.12109375
+    },
+    {
+      "feature_index": 139,
+      "support_ictal": 0.0030267176622733403,
+      "confidence": 0.006053268765133172,
+      "lift": 1.9642316672431686,
+      "threshold": 46680.62109375
+    },
+    {
+      "feature_index": 0,
+      "support_ictal": 0.0030267176622733403,
+      "confidence": 0.006053268765133172,
+      "lift": 1.9642316672431686,
+      "threshold": 39011.26171875
+    },
+    {
+      "feature_index": 136,
+      "support_ictal": 0.0030267176622733403,
+      "confidence": 0.006053268765133172,
+      "lift": 1.9642316672431686,
+      "threshold": 39357.375
+    },
+    {
+      "feature_index": 13,
+      "support_ictal": 0.0029992020471617644,
+      "confidence": 0.005998239049086506,
+      "lift": 1.946375015722776,
+      "threshold": 42311.4296875
+    },
+    {
+      "feature_index": 137,
+      "support_ictal": 0.0029716864320501885,
+      "confidence": 0.005943209333039842,
+      "lift": 1.9285183642023838,
+      "threshold": 49415.30859375
+    },
+    {
+      "feature_index": 1,
+      "support_ictal": 0.002916655201827037,
+      "confidence": 0.005833149900946511,
+      "lift": 1.8928050611615987,
+      "threshold": 49081.421875
+    },
+    {
+      "feature_index": 3,
+      "support_ictal": 0.002916655201827037,
+      "confidence": 0.005833149900946511,
+      "lift": 1.8928050611615987,
+      "threshold": 46583.9453125
+    }
+  ]
+}
