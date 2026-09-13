@@ -429,3 +429,11 @@ Patient-wise generalization is unavailable for this run because all available
 recordings belong to the single patient CHB02. The classifier output is
 therefore explicitly marked preliminary recording-wise analysis and must not be
 interpreted as patient-wise performance.
+
+### Final current-scope status
+
+Repository-side preprocessing, integration, feature, and evaluation gates are
+complete for the available CHB02 scope. Patient-wise generalization is **NOT
+AVAILABLE WITH CURRENT DATA** and requires additional patients. Final commits
+for this work are `37decf7` (Pipeline A benchmark and test integration) and
+`04e507a` (cross-pipeline validation and documentation).
