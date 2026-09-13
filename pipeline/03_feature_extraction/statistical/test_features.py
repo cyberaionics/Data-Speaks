@@ -1,9 +1,19 @@
+import importlib.util
+from pathlib import Path
+
 import numpy as np
 
-from features import (
-    extract_statistical_features,
-    flatten_statistical_features,
+spec = importlib.util.spec_from_file_location(
+    "statistical_features_test_module",
+    Path(__file__).with_name("features.py"),
 )
+if spec is None or spec.loader is None:
+    raise ImportError("Could not load statistical features module")
+features_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(features_module)
+
+extract_statistical_features = features_module.extract_statistical_features
+flatten_statistical_features = features_module.flatten_statistical_features
 
 
 def main():

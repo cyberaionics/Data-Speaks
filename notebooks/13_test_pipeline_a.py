@@ -1,9 +1,10 @@
 from pathlib import Path
+import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from pipeline.preprocessing_common.stage0 import load_stage0
 
 import importlib.util
-import sys
 
 DATA_DIR = Path("data/raw/physionet.org/chb02")
 SUMMARY_FILE = DATA_DIR / "chb02-summary.txt"

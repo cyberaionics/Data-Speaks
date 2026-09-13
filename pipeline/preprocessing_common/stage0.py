@@ -220,7 +220,7 @@ def load_stage0(
         sampling_rate_hz=sampling_rate,
         n_channels=len(raw.ch_names),
         n_samples=raw.n_times,
-        duration_sec=float(raw.times[-1]),
+        duration_sec=float(raw.n_times / sampling_rate),
         channel_names=list(raw.ch_names),
         seizure_intervals=seizure_intervals,
         qc=qc,

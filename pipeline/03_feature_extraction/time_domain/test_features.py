@@ -1,9 +1,19 @@
+import importlib.util
+from pathlib import Path
+
 import numpy as np
 
-from features import (
-    extract_time_domain_features,
-    flatten_time_domain_features,
+spec = importlib.util.spec_from_file_location(
+    "time_domain_features_test_module",
+    Path(__file__).with_name("features.py"),
 )
+if spec is None or spec.loader is None:
+    raise ImportError("Could not load time-domain features module")
+features_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(features_module)
+
+extract_time_domain_features = features_module.extract_time_domain_features
+flatten_time_domain_features = features_module.flatten_time_domain_features
 
 
 def main():
