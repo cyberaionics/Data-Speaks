@@ -5,7 +5,7 @@ Acceptance audit date: 2026-09-13
 ## Repository
 
 - Branch: `manish_FIR_ICA_ZSCORE`
-- Latest commit: `a739a47 Complete Pipeline D preprocessing and feature dataset`
+- Latest pipeline implementation commit: `a739a47 Complete Pipeline D preprocessing and feature dataset`
 - A/B/C/D implementation commits present: `be9d0a9`, `ded9a2a`, `c8b0040`, `a739a47`
 - Working tree: clean after the finalization commits listed below.
 - Forbidden tracked outputs: none. No EDF, FIF, generated CSV dataset, or benchmark output is tracked. Only `.gitkeep` files under results are tracked.
