@@ -32,25 +32,21 @@ Stage 0 Raw (17 Core Bipolar Channels, 256 Hz)
 
 ---
 
-## 2. ASRpy NumPy 2.x Compatibility Shim (`pipeline_c_compat.py`)
+## ASRpy NumPy 2.x Compatibility
 
-### Problem
-`asrpy` 0.0.8 was authored for NumPy < 2.0. In NumPy 2.x, 0-d or 1-element arrays returned by `np.round(n * max_width)` in `asrpy.asr_utils.fit_eeg_distribution()` fail with:
-`TypeError: only 0-dimensional arrays can be converted to Python scalars` when passed to `int()`.
+ASRpy 0.0.8 was developed for NumPy 1.x and has a scalar-conversion
+incompatibility with NumPy 2.x.
 
-### Crucial Implementation Detail
-In `asrpy/asr.py`, `fit_eeg_distribution` is imported directly into the module namespace:
-```python
-from .asr_utils import fit_eeg_distribution
-```
-Furthermore, `clean_windows()` and `asr_calibrate()` are defined inside `asrpy.asr` and resolve `fit_eeg_distribution` from the module globals of `asrpy.asr`.
-Therefore, patching `asrpy.asr_utils.fit_eeg_distribution` alone has **no effect** on `ASR.fit()`.
+To allow ASRpy to run in the current environment, the project includes
+`pipeline/01_preprocessing/candidate_algorithms/pipeline_c_compat.py`.
 
-The monkey-patch in `pipeline_c_compat.py` explicitly replaces:
-```python
-asrpy.asr.fit_eeg_distribution = _fit_eeg_distribution_patched
-```
-This safely coerces scalar arrays via `int(float(np.round(...)))` without altering any algorithmic logic, thresholds, or modifying package files in `site-packages`.
+The compatibility shim patches the affected scalar conversion at runtime
+without modifying the installed ASRpy package in `site-packages`.
+
+The patch does not change the ASR algorithm, parameters, thresholds, or
+artifact-removal logic. It only ensures compatibility with NumPy 2.x.
+
+The shim is applied before Pipeline C imports and runs ASR.
 
 ---
 
@@ -68,11 +64,13 @@ This safely coerces scalar arrays via `int(float(np.round(...)))` without alteri
 
 ## 4. Execution Instructions
 
-Ensure you are using the Anaconda Python environment where `mne`, `asrpy`, `scipy`, and `numpy` are installed:
+Ensure the Python environment contains the required dependencies:
+`mne`, `asrpy`, `scipy`, and `numpy`.
 
 ### Single Recording Validation (chb01_03)
+From the repository root:
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe C:\Users\Kavya\Data-Speaks\pipeline\01_preprocessing\candidate_algorithms\run_pipeline_c_chb01_03.py
+python pipeline/01_preprocessing/candidate_algorithms/run_pipeline_c_chb01_03.py
 ```
 Outputs:
 - Figures in `results/figures/pipeline_c/`
@@ -80,7 +78,7 @@ Outputs:
 
 ### Full Patient Cohort Execution (chb01)
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe C:\Users\Kavya\Data-Speaks\pipeline\01_preprocessing\candidate_algorithms\run_pipeline_c_chb01.py
+python pipeline/01_preprocessing/candidate_algorithms/run_pipeline_c_chb01.py
 ```
 Output:
 - Summary evaluation metrics table: `results/tables/pipeline_c_chb01_metrics.csv`

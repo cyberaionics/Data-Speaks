@@ -4,7 +4,7 @@
 
 Data-Speaks is a computational neuroscience research pipeline built around the **CHB-MIT Scalp EEG Database**. Developed for the course *Mathematics for Data Science* at the **Indian Institute of Technology Dharwad (IIT Dharwad)**, Department of Mathematics and Computing.
 
-> **Scope Disclaimer:** Educational and research-oriented project. Does **not** claim clinical usefulness or diagnostic validity.
+> **Scope Disclaimer:** The current implementation and empirical evaluation have been completed **only for patient CHB01** from the CHB-MIT Scalp EEG Database. All reported results, including preprocessing, feature extraction, PCA, clustering, EDA, classification, and standalone inference, are based on the **42 CHB01 recordings**.The pipeline is designed so that it can be extended to other patients, but **results for other CHB-MIT patients have not yet been produced or evaluated**.This is therefore a **single-patient analysis**, not a patient-independent seizure-detection system.This project is educational and research-oriented and does not claim clinical diagnostic validity.
 
 ---
 
@@ -141,7 +141,7 @@ Data-Speaks/
 
 ---
 
-## 4. Completed Pipeline Stages & Scientific Methodology
+## 4. Pipeline Stages
 
 ### Stage 0 — Standardization & Quality Control
 - Selects the canonical 17 bipolar EEG channel montage:
@@ -197,8 +197,9 @@ Data-Speaks/
 - **Standalone Inference (`inference.py`)**: End-to-end pipeline that takes raw EDF input, executes Stage 0 → Pipeline C → Segmentation → Feature Extraction → saved Scaler → saved PCA → saved Classifier, outputting window-level predicted labels and probabilities without requiring ground-truth annotations.
 
 ---
+## 5. Results
 
-## 5. Summary of Results & Empirical Validation
+All results in this section are from the CHB01 cohort.
 
 ### PCA Variance Decomposition (72,951 Windows $\times$ 442 Features)
 
@@ -209,7 +210,7 @@ Data-Speaks/
 | **95% Explained Variance** | **110 PCs** | **75.1% reduction** |
 | 99% Explained Variance | **217 PCs** | 50.9% reduction |
 
-### Unsupervised Clustering Evaluation (110-PC Space)
+### CHB01 Unsupervised Clustering Evaluation (110-PC Space)
 
 Data source: [`results/tables/chb01_clustering_metrics.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_clustering_metrics.csv)
 
@@ -222,7 +223,7 @@ Data source: [`results/tables/chb01_clustering_metrics.csv`](file:///C:/Users/Ka
 | **K-Means ($k=6$)** | 6 | 0.1109 | 0.0027 | 0.0056 |
 | **DBSCAN ($\epsilon=12.0, \text{MinPts}=15$)** | 4 | 0.1003 | **0.0061** | **0.0102** |
 
-### Supervised Classification Evaluation (5-Fold GroupKFold by `recording_id`)
+### CHB01 Supervised Classification Evaluation (5-Fold GroupKFold by `recording_id`)
 
 Data source: [`results/tables/chb01_classification_metrics.csv`](file:///C:/Users/Kavya/Data-Speaks/results/tables/chb01_classification_metrics.csv)
 
@@ -258,33 +259,33 @@ cd Data-Speaks
 
 #### Option A: Full Preprocessing & Feature Extraction Batch Pipeline (All 42 EDFs)
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe pipeline/run_chb01_complete_batch.py
+python pipeline/run_chb01_complete_batch.py
 ```
 
 #### Option B: Standalone Feature Analysis & EDA Passes
 ```powershell
 # Run Pass 2 (PCA) on existing master feature matrix
-C:\Users\Kavya\anaconda3\python.exe pipeline/run_chb01_complete_batch.py --pass2-only
+python pipeline/run_chb01_complete_batch.py --pass2-only
 
 # Run Pass 3 (Unsupervised Clustering) on existing PCA-reduced matrix
-C:\Users\Kavya\anaconda3\python.exe pipeline/run_chb01_complete_batch.py --pass3-only
+python pipeline/run_chb01_complete_batch.py --pass3-only
 
 # Run Pass 4 (Midterm 5-Pillar EDA) on existing feature matrix
-C:\Users\Kavya\anaconda3\python.exe pipeline/run_chb01_complete_batch.py --pass4-only
+python pipeline/run_chb01_complete_batch.py --pass4-only
 ```
 
 #### Option C: Stage 06 Supervised Classification
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe pipeline/06_classification/run_classification_chb01.py
+python pipeline/06_classification/run_classification_chb01.py
 ```
 
 #### Option D: Standalone EDF Inference
 ```powershell
 # Run inference on held-out validation recording chb01_03
-C:\Users\Kavya\anaconda3\python.exe pipeline/06_classification/inference.py --recording chb01_03
+python pipeline/06_classification/inference.py --recording chb01_03
 
 # Run inference on a new unannotated EDF file
-C:\Users\Kavya\anaconda3\python.exe pipeline/06_classification/inference.py ^
+python pipeline/06_classification/inference.py ^
     --edf path\to\recording.edf ^
     --recording my_recording_id ^
     --patient chb01 ^

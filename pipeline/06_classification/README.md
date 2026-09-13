@@ -110,14 +110,6 @@ Labels:
 
 Ambiguous windows are excluded from classification.
 
-After exclusion:
-
-```text
-72,947 usable windows
-72,721 interictal
-226 ictal
-```
-
 ---
 
 ## Models
@@ -376,13 +368,13 @@ This:
 ### Held-out inference demonstration
 
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe pipeline/06_classification/inference.py --recording chb01_03
+python pipeline/06_classification/inference.py --recording chb01_03
 ```
 
 ### New EDF
 
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe pipeline/06_classification/inference.py ^
+python pipeline/06_classification/inference.py ^
     --edf path\to\new_recording.edf ^
     --recording new_recording_id ^
     --patient chb01 ^
@@ -455,21 +447,3 @@ The held-out `chb01_03` demonstration produced no binary ictal predictions at th
 This is an educational/research-oriented computational study and does not establish clinical diagnostic performance.
 
 ---
-
-## Current Status
-
-The current Data-Speaks pipeline is complete through:
-
-```text
-Stage 0                 ✅
-Pipeline C              ✅
-Stage 02 Segmentation   ✅
-Stage 03 Features       ✅
-Stage 04 PCA            ✅
-Stage 05 Clustering     ✅
-5-Pillar EDA            ✅
-Stage 06 Classification ✅
-Standalone Inference    ✅
-```
-
-The remaining work is interpretation, final report/presentation preparation, and repository cleanup rather than another major algorithmic redesign.

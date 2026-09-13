@@ -90,7 +90,9 @@ Data source: [`results/tables/chb01_03_clustering_metrics.csv`](file:///C:/Users
 
 ## 6. Usage & Execution
 
+From the repository root:
+
 ```powershell
-# Run standalone clustering pass on existing PCA matrix
-C:\Users\Kavya\anaconda3\python.exe pipeline/run_chb01_complete_batch.py --pass3-only
+# Run standalone clustering pass on the existing PCA matrix
+python pipeline/run_chb01_complete_batch.py --pass3-only
 ```

@@ -91,42 +91,16 @@ For each of the 5 bands:
    - Metadata columns (`patient_id`, `recording_id`, `window_id`, `start_sec`, `end_sec`, `duration_sec`, `label`) are placed at the beginning of the DataFrame. Labels ($0, 1, -1$) are never modified.
 
 ---
+## 4. Real Data Validation: `chb01_03`
 
-## 4. Usage Example
+Validation was performed on the real CHB-MIT recording `chb01_03.edf`.
 
-```python
-from pipeline.02_segmentation.segmentation import segment_raw
-from pipeline.03_feature_extraction.feature_extraction import extract_features
+### Validation Run
 
-# 1. Segment preprocessed continuous EEG
-seg_result = segment_raw(
-    raw_clean,
-    seizure_intervals=[(2996.0, 3036.0)],
-    window_sec=4.0,
-    overlap=0.50,
-    patient_id="chb01",
-    recording_id="chb01_03"
-)
+From the repository root:
 
-# 2. Extract features
-features_df = extract_features(
-    result=seg_result,
-    ch_names=list(raw_clean.ch_names),
-    sfreq=256.0
-)
-
-# 3. Inspect shape: (n_windows, 449)
-print(features_df.shape)
-```
-
----
-
-## 5. Real Data Validation: `chb01_03`
-
-Validation run command:
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe C:\Users\Kavya\Data-Speaks\pipeline\03_feature_extraction\run_feature_extraction_chb01_03.py
-```
+python pipeline/03_feature_extraction/run_feature_extraction_chb01_03.py
 
 Results:
 - **Input Recording**: `chb01_03.edf` (1 hour continuous EEG, 3600 seconds, 17 channels, seizure at 2996–3036s)

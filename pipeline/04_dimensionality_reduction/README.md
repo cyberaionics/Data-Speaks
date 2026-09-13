@@ -77,10 +77,10 @@ Figures generated in [`results/figures/pca/`](file:///C:/Users/Kavya/Data-Speaks
 
 ## 5. Usage & Execution
 
-```powershell
-# Run unit tests
-C:\Users\Kavya\anaconda3\python.exe pipeline/04_dimensionality_reduction/test_dimensionality_reduction.py
+From the repository root:
 
-# Run standalone PCA pass on full master feature matrix
-C:\Users\Kavya\anaconda3\python.exe pipeline/run_chb01_complete_batch.py --pass2-only
+### Run unit tests
+
+```powershell
+python pipeline/04_dimensionality_reduction/test_dimensionality_reduction.py
 ```
