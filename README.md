@@ -361,3 +361,71 @@ Core dependencies: `mne`, `numpy`, `scipy`, `pandas`, `scikit-learn`, `matplotli
 ---
 
 *Data-Speaks — a course project by the Mathematics and Computing team, IIT Dharwad.*
+
+## 13. Verified Implementation Status
+
+The current working tree includes reproducible validation runners for the four
+preprocessing pipelines and common downstream evaluation. Generated EDF/FIF,
+feature, benchmark, and evaluation outputs remain excluded by `.gitignore`.
+
+### Common contract
+
+- Stage 0 is shared by all pipelines and preserves 23 EEG channels and their
+  deterministic order.
+- Windowing uses 4-second windows, 50% overlap, 1024 samples, and 512-sample
+  stride at 256 Hz.
+- Boundary and partial-overlap windows are excluded from supervised datasets;
+  the valid feature datasets use the same 598-column schema and metadata order.
+- Stage 0 duration is calculated as `n_samples / sampling_rate_hz`.
+
+### Measured CHB02 results
+
+All four pipelines have been processed over the 36 discovered CHB02 EDF files.
+Each full feature dataset contains 63,257 valid windows: 63,169 interictal and
+88 ictal, with 598 finite features and no zero-variance feature columns. The
+four datasets have identical recording/window/label metadata and feature
+column order; their feature values are not identical.
+
+Pipeline C and D end-to-end tests pass, including channel preservation, finite
+outputs, and 256 Hz output. Pipeline A was extended from its previous
+two-recording benchmark to all 36 recordings without changing its processing
+implementation. The full provenance files record runtime, memory, parameters,
+channels, seizure intervals, and output shapes.
+
+### Evaluation commands
+
+Run from the repository root with the project environment activated:
+
+```bash
+.venv/bin/python -m pytest -q
+.venv/bin/python notebooks/13_test_pipeline_a.py
+.venv/bin/python notebooks/28_test_pipeline_b.py
+.venv/bin/python notebooks/41_test_pipeline_c.py
+.venv/bin/python notebooks/49_test_pipeline_d.py
+.venv/bin/python notebooks/14_benchmark_pipeline_a.py
+.venv/bin/python notebooks/54_build_full_feature_dataset_pipeline_a.py
+.venv/bin/python notebooks/39_build_full_feature_dataset_pipeline_b.py
+.venv/bin/python notebooks/44_build_full_feature_dataset_pipeline_c.py
+.venv/bin/python notebooks/51_build_full_feature_dataset_pipeline_d.py
+.venv/bin/python notebooks/57_validate_cross_pipeline_contract.py
+.venv/bin/python notebooks/55_common_evaluation.py
+.venv/bin/python notebooks/56_level1_evaluation.py
+```
+
+The canonical full A benchmark is `notebooks/14_benchmark_pipeline_a.py`; it
+discovers every EDF in the CHB02 directory and writes A provenance to
+`results/benchmarks/pipeline_A_provenance.json`. The B, C, and D benchmark
+entry points are `notebooks/29_benchmark_pipeline_b.py`,
+`notebooks/43_benchmark_pipeline_c.py`, and `notebooks/50_benchmark_pipeline_d.py`.
+Feature builders write ignored CSV outputs under `results/benchmarks/`.
+
+The common evaluation uses seed 42, standardized PCA targeting 95% explained
+variance, KMeans with two clusters, and one identical logistic-regression
+configuration. Level 1 uses the same 60-second CHB02 segment, frequency bands,
+and seeded synthetic-noise scale for all pipelines. Machine-readable outputs
+are written under `results/benchmarks/` and are not committed.
+
+Patient-wise generalization is unavailable for this run because all available
+recordings belong to the single patient CHB02. The classifier output is
+therefore explicitly marked preliminary recording-wise analysis and must not be
+interpreted as patient-wise performance.
