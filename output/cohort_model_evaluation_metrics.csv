@@ -1,0 +1,2 @@
+Cohort Subjects Evaluated,Total Recordings Processed,Total Evaluated Hours,Total Clinical Seizures,Event-Level Sensitivity (%),Epoch-Level Sensitivity (%),Epoch-Level Precision (%),Mean Detection Latency (s),False Alarms per 24 Hours,False Alarms per Hour,AUROC,AUPRC,Feature Representation
+18,52,76.16,72,61.11,42.67,59.51,12.48,206.72,8.61,0.9088,0.5142,126 features (7 features x 18 channels)
