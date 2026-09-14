@@ -236,6 +236,34 @@ The RBF SVM can be run with `--model svm`, but it is substantially slower on
 the current 36,000-plus-window feature set. Run it deliberately rather than
 as part of every comparison.
 
+Run the complete workflow for every patient in one command:
+
+```bash
+uv run python scripts/run_all_patients.py --model all
+```
+
+For each patient, this preprocesses the EDF files, evaluates every registered
+baseline classifier, creates the patient comparison and mathematical report, and then
+exports processed summaries and aggregates all completed patient benchmarks.
+The runner continues to the next patient when one patient or stage fails and
+prints a failure summary at the end. Use `--patients chb01 chb02` to select a
+subset or `--skip-preprocess` when processed arrays already exist.
+
+If a long run is interrupted, resume it without repeating patients whose
+requested benchmark files are already present:
+
+```bash
+uv run python scripts/run_all_patients.py --model all --resume
+```
+
+The default batch run excludes the slow RBF SVM so the first patient does not
+appear stalled during a long kernel fit. Add `--include-svm` to run it after
+the logistic-regression, random-forest, and KNN baselines:
+
+```bash
+uv run python scripts/run_all_patients.py --model all --include-svm
+```
+
 ## Event Metrics
 
 Window predictions become events when a positive prediction follows a negative

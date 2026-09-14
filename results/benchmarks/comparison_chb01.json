@@ -7,6 +7,9 @@
       "n_seizure_records": 7,
       "n_nonseizure_records": 35,
       "sensitivity_mean": 1.0,
+      "epoch_sensitivity": 0.6696428571428571,
+      "pr_auc": 0.9030698491702146,
+      "f1_score": 0.7894736842105263,
       "latency_sec_mean": 5.857142857142857,
       "fdr_per_24h_mean": 2.057142857142857
     },
@@ -16,6 +19,9 @@
       "n_seizure_records": 7,
       "n_nonseizure_records": 35,
       "sensitivity_mean": 1.0,
+      "epoch_sensitivity": 0.8214285714285714,
+      "pr_auc": 0.7419562880990233,
+      "f1_score": 0.7540983606557377,
       "latency_sec_mean": 1.0,
       "fdr_per_24h_mean": 18.069846038302664
     },
@@ -25,6 +31,9 @@
       "n_seizure_records": 7,
       "n_nonseizure_records": 35,
       "sensitivity_mean": 0.8571428571428571,
+      "epoch_sensitivity": 0.6875,
+      "pr_auc": 0.808160224640313,
+      "f1_score": 0.8020833333333334,
       "latency_sec_mean": 2.1666666666666665,
       "fdr_per_24h_mean": 1.3714285714285714
     }

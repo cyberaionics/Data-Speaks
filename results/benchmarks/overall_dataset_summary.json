@@ -43,6 +43,9 @@
         "n_seizure_records": 7,
         "n_nonseizure_records": 35,
         "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.8214285714285714,
+        "pr_auc": 0.7419562880990233,
+        "f1_score": 0.7540983606557377,
         "latency_sec_mean": 1.0,
         "fdr_per_24h_mean": 18.069846038302664
       },

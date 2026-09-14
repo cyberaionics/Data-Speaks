@@ -1,5 +1,14 @@
 import numpy as np
 
+def model_scores(clf, scaler, X):
+    X_scaled = scaler.transform(X)
+    if hasattr(clf, "predict_proba"):
+        return clf.predict_proba(X_scaled)[:, 1]
+    if hasattr(clf, "decision_function"):
+        return clf.decision_function(X_scaled)
+    return clf.predict(X_scaled)
+
+
 def leave_one_record_out(records, model_train, model_predict):
     ids = list(records.keys())
     for test_id in ids:
@@ -17,4 +26,5 @@ def leave_one_record_out(records, model_train, model_predict):
             continue
         clf, scaler = model_train(X_tr, y_tr)
         y_pred = model_predict(clf, scaler, records[test_id]["X"])
-        yield test_id, y_pred, records[test_id]["y"]
+        y_score = model_scores(clf, scaler, records[test_id]["X"])
+        yield test_id, y_pred, records[test_id]["y"], y_score

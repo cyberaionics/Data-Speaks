@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 import sys, json
 import numpy as np
+from sklearn.metrics import average_precision_score, f1_score, recall_score
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -28,9 +29,10 @@ def load_patient(proc_dir):
 
 def evaluate_model(records, train, predict, prediction_dir):
     results = []
-    for test_id, y_pred, y_true in leave_one_record_out(records, train, predict):
+    for test_id, y_pred, y_true, y_score in leave_one_record_out(records, train, predict):
         rec = records[test_id]
         np.save(prediction_dir / f"{test_id}_y_pred.npy", y_pred)
+        np.save(prediction_dir / f"{test_id}_y_score.npy", y_score)
         events = detect_events(y_pred, rec["starts"])
         seizures = rec["meta"]["seizures"]
         duration = rec["meta"].get("duration_seconds", rec["meta"]["n_windows"] * 2.0)
@@ -39,6 +41,12 @@ def evaluate_model(records, train, predict, prediction_dir):
             "n_windows": int(len(y_true)),
             "n_positive_windows": int((y_pred == 1).sum()),
             "n_events": len(events),
+            "epoch_sensitivity": float(recall_score(y_true, y_pred, zero_division=0)),
+            "pr_auc": float(average_precision_score(y_true, y_score)) if len(np.unique(y_true)) > 1 else None,
+            "f1_score": float(f1_score(y_true, y_pred, zero_division=0)),
+            "_y_true": y_true,
+            "_y_pred": y_pred,
+            "_y_score": y_score,
         }
         if seizures:
             row["sensitivity"] = sensitivity(seizures, events)
@@ -53,11 +61,17 @@ def summarize(results):
     seizure_rows = [row for row in results if "sensitivity" in row]
     nonseizure_rows = [row for row in results if "fdr_per_24h" in row]
     latencies = [row["latency_sec"] for row in seizure_rows if row["latency_sec"] is not None]
+    y_true = np.concatenate([row["_y_true"] for row in results]) if results else np.array([])
+    y_pred = np.concatenate([row["_y_pred"] for row in results]) if results else np.array([])
+    y_score = np.concatenate([row["_y_score"] for row in results]) if results else np.array([])
     return {
         "n_records": len(results),
         "n_seizure_records": len(seizure_rows),
         "n_nonseizure_records": len(nonseizure_rows),
         "sensitivity_mean": float(sum(row["sensitivity"] for row in seizure_rows) / len(seizure_rows)) if seizure_rows else None,
+        "epoch_sensitivity": float(recall_score(y_true, y_pred, zero_division=0)) if len(y_true) else None,
+        "pr_auc": float(average_precision_score(y_true, y_score)) if len(np.unique(y_true)) > 1 else None,
+        "f1_score": float(f1_score(y_true, y_pred, zero_division=0)) if len(y_true) else None,
         "latency_sec_mean": float(sum(latencies) / len(latencies)) if latencies else None,
         "fdr_per_24h_mean": float(sum(row["fdr_per_24h"] for row in nonseizure_rows) / len(nonseizure_rows)) if nonseizure_rows else None,
     }
@@ -83,19 +97,21 @@ def main():
     prediction_root = Path(args.prediction_root)
 
     records = load_patient(proc_dir)
-    print(f"Patient {args.patient}: {len(records)} records")
+    print(f"Patient {args.patient}: {len(records)} records", flush=True)
 
     selected = list(MODELS) if args.model == "all" else [args.model]
     for model_name in selected:
+        print(f"Starting model {model_name} for {args.patient}", flush=True)
         train, predict = load_model(model_name)
         prediction_dir = prediction_root / model_name / args.patient
         prediction_dir.mkdir(parents=True, exist_ok=True)
         results = evaluate_model(records, train, predict, prediction_dir)
-        output = {"model": model_name, "patient": args.patient, "summary": summarize(results), "records": results}
+        serializable_records = [{key: value for key, value in row.items() if not key.startswith("_")} for row in results]
+        output = {"model": model_name, "patient": args.patient, "summary": summarize(results), "records": serializable_records}
         out = bench_dir / f"{model_name}_{args.patient}_loso.json"
         out.write_text(json.dumps(output, indent=2))
-        print(f"{model_name}: {output['summary']}")
-        print(f"Saved -> {out}")
+        print(f"{model_name}: {output['summary']}", flush=True)
+        print(f"Saved -> {out}", flush=True)
 
 
 if __name__ == "__main__":

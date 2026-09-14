@@ -6,6 +6,9 @@
     "n_seizure_records": 7,
     "n_nonseizure_records": 35,
     "sensitivity_mean": 1.0,
+    "epoch_sensitivity": 0.8214285714285714,
+    "pr_auc": 0.7419562880990233,
+    "f1_score": 0.7540983606557377,
     "latency_sec_mean": 1.0,
     "fdr_per_24h_mean": 18.069846038302664
   },
@@ -15,6 +18,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -22,6 +28,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -29,6 +38,9 @@
       "n_windows": 883,
       "n_positive_windows": 9,
       "n_events": 2,
+      "epoch_sensitivity": 0.8,
+      "pr_auc": 0.9123595848595849,
+      "f1_score": 0.8421052631578947,
       "sensitivity": 1.0,
       "latency_sec": 4.0
     },
@@ -37,6 +49,9 @@
       "n_windows": 883,
       "n_positive_windows": 7,
       "n_events": 1,
+      "epoch_sensitivity": 1.0,
+      "pr_auc": 1.0,
+      "f1_score": 1.0,
       "sensitivity": 1.0,
       "latency_sec": 0.0
     },
@@ -45,6 +60,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -52,6 +70,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -59,6 +80,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -66,6 +90,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -73,6 +100,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -80,6 +110,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -87,6 +120,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -94,6 +130,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -101,6 +140,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -108,6 +150,9 @@
       "n_windows": 899,
       "n_positive_windows": 2,
       "n_events": 2,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 48.0
     },
     {
@@ -115,6 +160,9 @@
       "n_windows": 883,
       "n_positive_windows": 6,
       "n_events": 1,
+      "epoch_sensitivity": 0.6,
+      "pr_auc": 0.8634159159159158,
+      "f1_score": 0.75,
       "sensitivity": 1.0,
       "latency_sec": 0.0
     },
@@ -123,6 +171,9 @@
       "n_windows": 883,
       "n_positive_windows": 7,
       "n_events": 2,
+      "epoch_sensitivity": 0.46153846153846156,
+      "pr_auc": 0.7649260076921246,
+      "f1_score": 0.6,
       "sensitivity": 1.0,
       "latency_sec": 0.0
     },
@@ -131,6 +182,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -138,6 +192,9 @@
       "n_windows": 883,
       "n_positive_windows": 22,
       "n_events": 1,
+      "epoch_sensitivity": 1.0,
+      "pr_auc": 1.0,
+      "f1_score": 1.0,
       "sensitivity": 1.0,
       "latency_sec": 0.0
     },
@@ -146,6 +203,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -153,6 +213,9 @@
       "n_windows": 665,
       "n_positive_windows": 3,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 32.44461134059332
     },
     {
@@ -160,6 +223,9 @@
       "n_windows": 883,
       "n_positive_windows": 24,
       "n_events": 5,
+      "epoch_sensitivity": 0.8333333333333334,
+      "pr_auc": 0.9469330626307371,
+      "f1_score": 0.8333333333333334,
       "sensitivity": 1.0,
       "latency_sec": 1.0
     },
@@ -168,6 +234,9 @@
       "n_windows": 899,
       "n_positive_windows": 4,
       "n_events": 4,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 96.0
     },
     {
@@ -175,6 +244,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -182,6 +254,9 @@
       "n_windows": 899,
       "n_positive_windows": 2,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -189,6 +264,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -196,6 +274,9 @@
       "n_windows": 564,
       "n_positive_windows": 23,
       "n_events": 2,
+      "epoch_sensitivity": 0.8846153846153846,
+      "pr_auc": 0.9078279737398466,
+      "f1_score": 0.9387755102040817,
       "sensitivity": 1.0,
       "latency_sec": 2.0
     },
@@ -204,6 +285,9 @@
       "n_windows": 149,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -211,6 +295,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -218,6 +305,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -225,6 +315,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -232,6 +325,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -239,6 +335,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -246,6 +345,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -253,6 +355,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -260,6 +365,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -267,6 +375,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -274,6 +385,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -281,6 +395,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     },
     {
@@ -288,6 +405,9 @@
       "n_windows": 899,
       "n_positive_windows": 1,
       "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 24.0
     },
     {
@@ -295,6 +415,9 @@
       "n_windows": 899,
       "n_positive_windows": 11,
       "n_events": 7,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 168.0
     },
     {
@@ -302,6 +425,9 @@
       "n_windows": 899,
       "n_positive_windows": 3,
       "n_events": 2,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 48.0
     },
     {
@@ -309,6 +435,9 @@
       "n_windows": 899,
       "n_positive_windows": 0,
       "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
       "fdr_per_24h": 0.0
     }
   ]

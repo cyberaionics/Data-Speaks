@@ -10,6 +10,7 @@ PROC_ROOT = ROOT / "data" / "processed"
 BENCH_ROOT = ROOT / "results" / "benchmarks"
 PRED_ROOT = ROOT / "results" / "predictions"
 FIG_ROOT = ROOT / "results" / "figures"
+REPORT_ROOT = ROOT / "reports"
 
 
 def discover_patients(raw_root: Path):
@@ -23,10 +24,23 @@ def discover_patients(raw_root: Path):
 
 
 def run_command(command):
-    print(f"Running: {' '.join(command)}")
+    print(f"Running: {' '.join(command)}", flush=True)
     result = subprocess.run(command, cwd=str(ROOT), text=True)
     if result.returncode != 0:
-        raise RuntimeError(f"Command failed with exit code {result.returncode}: {' '.join(command)}")
+        print(f"Command failed with exit code {result.returncode}")
+        return False
+    return True
+
+
+def selected_models(model, include_svm):
+    models = [model] if model != "all" else ["logistic_regression", "random_forest", "knn"]
+    if model == "all" and include_svm:
+        models.append("svm")
+    return models
+
+
+def patient_has_benchmarks(patient, bench_root, models):
+    return all((bench_root / f"{model}_{patient}_loso.json").exists() for model in models)
 
 
 def main():
@@ -37,7 +51,11 @@ def main():
     ap.add_argument("--bench-root", default=str(BENCH_ROOT))
     ap.add_argument("--prediction-root", default=str(PRED_ROOT))
     ap.add_argument("--fig-root", default=str(FIG_ROOT))
+    ap.add_argument("--report-dir", default=str(REPORT_ROOT / "dataset_summary"))
+    ap.add_argument("--processed-report-dir", default=str(REPORT_ROOT / "processed_summaries"))
     ap.add_argument("--model", choices=["logistic_regression", "random_forest", "knn", "svm", "all"], default="all")
+    ap.add_argument("--include-svm", action="store_true", help="Include the slow RBF SVM when --model all is used")
+    ap.add_argument("--resume", action="store_true", help="Skip patients whose requested benchmark files already exist")
     ap.add_argument("--skip-preprocess", action="store_true", help="Skip preprocessing and only run evaluation for already-processed patients")
     args = ap.parse_args()
 
@@ -46,6 +64,8 @@ def main():
     bench_root = Path(args.bench_root)
     pred_root = Path(args.prediction_root)
     fig_root = Path(args.fig_root)
+    report_dir = Path(args.report_dir)
+    processed_report_dir = Path(args.processed_report_dir)
 
     proc_root.mkdir(parents=True, exist_ok=True)
     bench_root.mkdir(parents=True, exist_ok=True)
@@ -54,15 +74,22 @@ def main():
 
     patients = args.patients if args.patients else discover_patients(raw_root)
     print(f"Discovered patients: {patients}")
+    failures = []
+    models = selected_models(args.model, args.include_svm)
 
     for patient in patients:
+        if args.resume and patient_has_benchmarks(patient, bench_root, models):
+            print(f"Skipping completed patient {patient} (benchmarks already exist)")
+            continue
+
         patient_raw_dir = raw_root / patient
         if not patient_raw_dir.exists():
             print(f"Skipping missing raw folder: {patient_raw_dir}")
+            failures.append((patient, "missing raw folder"))
             continue
 
         if not args.skip_preprocess:
-            run_command([
+            if not run_command([
                 sys.executable,
                 str(SCRIPT_DIR / "preprocess_patient.py"),
                 "--patient",
@@ -71,10 +98,13 @@ def main():
                 str(raw_root),
                 "--out-root",
                 str(proc_root),
-            ])
+            ]):
+                failures.append((patient, "preprocessing"))
+                continue
 
-        if args.model == "all":
-            run_command([
+        evaluated = True
+        for model in models:
+            if not run_command([
                 sys.executable,
                 str(SCRIPT_DIR / "run_patient.py"),
                 "--patient",
@@ -86,32 +116,24 @@ def main():
                 "--prediction-root",
                 str(pred_root),
                 "--model",
-                "all",
-            ])
-        else:
-            run_command([
-                sys.executable,
-                str(SCRIPT_DIR / "run_patient.py"),
-                "--patient",
-                patient,
-                "--proc-root",
-                str(proc_root),
-                "--bench-root",
-                str(bench_root),
-                "--prediction-root",
-                str(pred_root),
-                "--model",
-                args.model,
-            ])
+                model,
+            ]):
+                evaluated = False
+                break
+        if not evaluated:
+            failures.append((patient, "model evaluation"))
+            continue
 
-        run_command([
+        compared = run_command([
             sys.executable,
             str(SCRIPT_DIR / "compare_models.py"),
             "--patient",
             patient,
         ])
+        if not compared:
+            failures.append((patient, "model comparison"))
 
-        run_command([
+        reported = run_command([
             sys.executable,
             str(SCRIPT_DIR / "math_report.py"),
             "--patient",
@@ -121,8 +143,33 @@ def main():
             "--fig-root",
             str(fig_root),
         ])
+        if not reported:
+            failures.append((patient, "math report"))
 
-    print("Batch pipeline setup complete. Run this script when you are ready to process all patients.")
+    run_command([
+        sys.executable,
+        str(SCRIPT_DIR / "export_midterm_dataset.py"),
+        "--report-dir",
+        str(processed_report_dir),
+    ])
+
+    run_command([
+        sys.executable,
+        str(SCRIPT_DIR / "summarize_all_patients.py"),
+        "--bench-root",
+        str(bench_root),
+        "--fig-root",
+        str(fig_root),
+        "--report-dir",
+        str(report_dir),
+    ])
+
+    if failures:
+        print(f"Batch pipeline completed with {len(failures)} issue(s):")
+        for patient, stage in failures:
+            print(f"  {patient}: {stage}")
+    else:
+        print(f"Batch pipeline completed successfully for {len(patients)} patients.")
 
 
 if __name__ == "__main__":
