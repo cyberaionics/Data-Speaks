@@ -46,8 +46,8 @@ BANDS = {
     'Gamma': (30.0, 45.0)
 }
 
-DATA_ROOT = Path(os.getenv('CHBMIT_DIR', Path(r'C:\Users\avani\chbmit')))
-PROJECT_DIR = Path(r'C:\Users\avani\.gemini\antigravity\scratch\chbmit_pipeline_approach4')
+DATA_ROOT = Path(os.getenv('CHBMIT_DIR', Path.home() / 'chbmit'))
+PROJECT_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = PROJECT_DIR / 'output'
 PROCESSED_DIR = PROJECT_DIR / 'processed_dataset'
 PLOTS_DIR = PROJECT_DIR / 'plots'
