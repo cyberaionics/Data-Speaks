@@ -4,8 +4,13 @@ from pathlib import Path
 from sklearn.model_selection import LeaveOneGroupOut
 
 def test_leave_one_group_out_splits():
-    # Load processed arrays from the project scratch directory
-    processed_dir = Path(r'C:\Users\avani\.gemini\antigravity\scratch\chbmit_pipeline_approach4\processed_dataset')
+    # Load processed arrays from the repo's processed_dataset/ folder
+    processed_dir = Path(__file__).resolve().parent.parent / 'processed_dataset'
+    if not processed_dir.exists():
+        raise FileNotFoundError(
+            f"'{processed_dir}' not found. Run `python scripts/cohort_pipeline.py` first "
+            "to generate the processed dataset before running this test."
+        )
     X = np.load(processed_dir / 'X_cohort.npy')
     y = np.load(processed_dir / 'y_cohort.npy')
     p_ids = np.load(processed_dir / 'patient_ids.npy')
