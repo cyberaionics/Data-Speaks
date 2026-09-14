@@ -7,25 +7,14 @@ This repository implements **Approach 4** for preprocessing, feature extractio
 
 ## Repository Structure
 ```
-README.md                <-- this file (artifact)
-context.md               <-- architectural decisions and rationale
-cohort_pipeline.py       <-- main driver (preprocessing, CV, model training)
-approach4_pipeline.py    <-- channel handling & feature extraction utilities
-make_notebook.py         <-- assembles a Jupyter notebook with results
-tests/
-│   test_cv_grouping.py  <-- verifies patient‑wise CV correctness
-processed_dataset/       <-- generated NumPy arrays and CSV metadata (see below)
-    X_cohort.npy
-    y_cohort.npy
-    patient_ids.npy
-    recording_ids.npy
-    metadata_cohort.csv
-    seizure_events_metadata.csv
-output/
-    cohort_model_evaluation_metrics.csv
-    <various>_eda_plot.png
-    Approach4_CHB01_Preprocessing_EDA.ipynb
-requirements.txt          <-- Python dependencies (use `pip install -r requirements.txt`)
+chbmit_pipeline_approach4/
+├── README.md
+├── requirements.txt
+├── scripts/         → approach4_pipeline.py, cohort_pipeline.py, run_pipeline_chb01.py, make_notebook.py
+├── notebooks/        → Approach4_CHB01_Preprocessing_EDA.ipynb
+├── tests/            → test_cv_grouping.py
+├── output/           → approach4_chb01_metrics.csv, cohort_model_evaluation_metrics.csv
+└── plots/            → all 5 PNGs
 ```
 
 **Note:** `processed_dataset/` and `output/` are *generated* by the pipeline and are **not** tracked in version control. Add them to `.gitignore`.
