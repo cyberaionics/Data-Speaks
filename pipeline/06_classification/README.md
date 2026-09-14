@@ -300,7 +300,7 @@ The exact 442-feature ordering used during training is stored in `feature_cols.p
 Command:
 
 ```powershell
-C:\Users\Kavya\anaconda3\python.exe pipeline/06_classification/inference.py --recording chb01_03
+python pipeline/06_classification/inference.py --recording chb01_03
 ```
 
 Input:
@@ -350,8 +350,7 @@ This should be reported as a **generalization limitation**, not as successful se
 ### Classification + model saving
 
 ```powershell
-cd C:\Users\Kavya\Data-Speaks
-C:\Users\Kavya\anaconda3\python.exe -u pipeline/06_classification/run_classification_chb01.py
+python -u pipeline/06_classification/run_classification_chb01.py
 ```
 
 This:
