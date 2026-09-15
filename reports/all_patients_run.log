@@ -1,0 +1,102 @@
+nohup: ignoring input
+Discovered patients: ['chb01', 'chb02', 'chb03', 'chb04', 'chb05', 'chb06', 'chb07', 'chb08', 'chb09', 'chb10', 'chb11', 'chb12', 'chb13', 'chb14', 'chb15', 'chb16', 'chb17', 'chb18', 'chb19', 'chb20', 'chb21', 'chb22', 'chb23', 'chb24']
+Skipping completed patient chb01 (benchmarks already exist)
+Skipping completed patient chb02 (benchmarks already exist)
+Skipping completed patient chb03 (benchmarks already exist)
+Skipping completed patient chb04 (benchmarks already exist)
+Skipping completed patient chb05 (benchmarks already exist)
+Running: /run/media/rangerofdanger/Files/Data Speaks/.venv/bin/python3 /run/media/rangerofdanger/Files/Data Speaks/scripts/preprocess_patient.py --patient chb06 --raw-root /run/media/rangerofdanger/Files/Data Speaks/data/raw/physionet.org --out-root /run/media/rangerofdanger/Files/Data Speaks/data/processed
+Patient chb06: 18 EDFs → /run/media/rangerofdanger/Files/Data Speaks/data/processed/chb06
+  chb06_01 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3606 win (ictal=0)
+  chb06_02 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_03 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_04 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3314 win (ictal=0)
+  chb06_05 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_06 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_07 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_08 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_09 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_10 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_12 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_13 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_14 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_15 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+3599 win (ictal=0)
+  chb06_16 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).
+/run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/candidate_algorithms/artifact_removal/ica.py:33: RuntimeWarning: No sensor positions found. Scores for bad muscle components are only based on the 'slope' criterion.
+  m_inds, _ = ica.find_bads_muscle(out, threshold = MUSCLE_THRESHOLD, verbose = False)
+757 win (ictal=0)
+  chb06_17 ... /run/media/rangerofdanger/Files/Data Speaks/pipeline/01_preprocessing/baseline/stage0.py:11: RuntimeWarning: Channel names are not unique, found duplicates for: {'T8-P8'}. Applying running numbers for duplicates.
+  raw = mne.io.read_raw_edf(edf_path, preload = True, verbose = False)
+NOTE: pick_channels() is a legacy function. New code should use inst.pick(...).

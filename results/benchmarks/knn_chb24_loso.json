@@ -1,0 +1,249 @@
+{
+  "model": "knn",
+  "patient": "chb24",
+  "summary": {
+    "n_records": 22,
+    "n_seizure_records": 12,
+    "n_nonseizure_records": 10,
+    "sensitivity_mean": 0.8333333333333334,
+    "epoch_sensitivity": 0.30303030303030304,
+    "pr_auc": 0.3641601617386321,
+    "f1_score": 0.418848167539267,
+    "latency_sec_mean": 36.9,
+    "fdr_per_24h_mean": 12.0
+  },
+  "records": [
+    {
+      "test_record": "chb24_01",
+      "n_windows": 867,
+      "n_positive_windows": 7,
+      "n_events": 3,
+      "epoch_sensitivity": 0.3076923076923077,
+      "pr_auc": 0.4276905332268654,
+      "f1_score": 0.4,
+      "sensitivity": 1.0,
+      "latency_sec": 12.0
+    },
+    {
+      "test_record": "chb24_02",
+      "n_windows": 899,
+      "n_positive_windows": 4,
+      "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 24.0
+    },
+    {
+      "test_record": "chb24_03",
+      "n_windows": 867,
+      "n_positive_windows": 2,
+      "n_events": 2,
+      "epoch_sensitivity": 0.13333333333333333,
+      "pr_auc": 0.4302960399846213,
+      "f1_score": 0.23529411764705882,
+      "sensitivity": 1.0,
+      "latency_sec": 1.0
+    },
+    {
+      "test_record": "chb24_04",
+      "n_windows": 851,
+      "n_positive_windows": 1,
+      "n_events": 1,
+      "epoch_sensitivity": 0.05,
+      "pr_auc": 0.4403223098875273,
+      "f1_score": 0.09523809523809523,
+      "sensitivity": 1.0,
+      "latency_sec": 332.0
+    },
+    {
+      "test_record": "chb24_05",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb24_06",
+      "n_windows": 883,
+      "n_positive_windows": 2,
+      "n_events": 1,
+      "epoch_sensitivity": 0.3333333333333333,
+      "pr_auc": 0.5033975084937712,
+      "f1_score": 0.5,
+      "sensitivity": 1.0,
+      "latency_sec": 7.0
+    },
+    {
+      "test_record": "chb24_07",
+      "n_windows": 883,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": 0.006795016987542469,
+      "f1_score": 0.0,
+      "sensitivity": 0.0,
+      "latency_sec": null
+    },
+    {
+      "test_record": "chb24_08",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb24_09",
+      "n_windows": 883,
+      "n_positive_windows": 2,
+      "n_events": 1,
+      "epoch_sensitivity": 0.4,
+      "pr_auc": 0.801132502831257,
+      "f1_score": 0.5714285714285714,
+      "sensitivity": 1.0,
+      "latency_sec": 7.0
+    },
+    {
+      "test_record": "chb24_10",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb24_11",
+      "n_windows": 891,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": 0.09223184223184223,
+      "f1_score": 0.0,
+      "sensitivity": 0.0,
+      "latency_sec": null
+    },
+    {
+      "test_record": "chb24_12",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb24_13",
+      "n_windows": 883,
+      "n_positive_windows": 3,
+      "n_events": 1,
+      "epoch_sensitivity": 0.75,
+      "pr_auc": 0.7511325028312571,
+      "f1_score": 0.8571428571428571,
+      "sensitivity": 1.0,
+      "latency_sec": 0.0
+    },
+    {
+      "test_record": "chb24_14",
+      "n_windows": 883,
+      "n_positive_windows": 4,
+      "n_events": 2,
+      "epoch_sensitivity": 0.2857142857142857,
+      "pr_auc": 0.23310143989645687,
+      "f1_score": 0.36363636363636365,
+      "sensitivity": 1.0,
+      "latency_sec": 1.0
+    },
+    {
+      "test_record": "chb24_15",
+      "n_windows": 884,
+      "n_positive_windows": 3,
+      "n_events": 1,
+      "epoch_sensitivity": 0.75,
+      "pr_auc": 0.95,
+      "f1_score": 0.8571428571428571,
+      "sensitivity": 1.0,
+      "latency_sec": 0.0
+    },
+    {
+      "test_record": "chb24_16",
+      "n_windows": 899,
+      "n_positive_windows": 1,
+      "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 24.0
+    },
+    {
+      "test_record": "chb24_17",
+      "n_windows": 887,
+      "n_positive_windows": 14,
+      "n_events": 1,
+      "epoch_sensitivity": 0.8235294117647058,
+      "pr_auc": 0.8846077326082631,
+      "f1_score": 0.9032258064516129,
+      "sensitivity": 1.0,
+      "latency_sec": 1.0
+    },
+    {
+      "test_record": "chb24_18",
+      "n_windows": 899,
+      "n_positive_windows": 9,
+      "n_events": 3,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 72.0
+    },
+    {
+      "test_record": "chb24_19",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb24_20",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb24_21",
+      "n_windows": 883,
+      "n_positive_windows": 7,
+      "n_events": 2,
+      "epoch_sensitivity": 0.4117647058823529,
+      "pr_auc": 0.7692358936779695,
+      "f1_score": 0.5833333333333334,
+      "sensitivity": 1.0,
+      "latency_sec": 8.0
+    },
+    {
+      "test_record": "chb24_22",
+      "n_windows": 266,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    }
+  ]
+}

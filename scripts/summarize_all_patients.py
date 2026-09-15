@@ -128,7 +128,7 @@ def save_patient_summary_plot(patient_rankings, fig_root: Path):
         best_sensitivity.append((patient, best.get("sensitivity_mean")))
 
     labels = [p for p, _ in best_sensitivity]
-    values = [v for _, v in best_sensitivity]
+    values = [v if v is not None else 0.0 for _, v in best_sensitivity]
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.bar(labels, values, color="#7A3E65")
     ax.set_title("Best sensitivity by patient")

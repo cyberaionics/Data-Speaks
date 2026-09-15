@@ -1,29 +1,46 @@
 {
-  "n_patients": 1,
+  "n_patients": 18,
   "patients": [
-    "chb01"
+    "chb01",
+    "chb02",
+    "chb03",
+    "chb04",
+    "chb05",
+    "chb06",
+    "chb07",
+    "chb08",
+    "chb09",
+    "chb10",
+    "chb11",
+    "chb12",
+    "chb14",
+    "chb20",
+    "chb21",
+    "chb22",
+    "chb23",
+    "chb24"
   ],
   "overall_model_summary": [
     {
-      "model": "random_forest",
-      "patients_evaluated": 1,
-      "mean_sensitivity": 1.0,
-      "mean_fdr_per_24h": 2.057142857142857,
-      "mean_latency_sec": 5.857142857142857
-    },
-    {
       "model": "logistic_regression",
-      "patients_evaluated": 1,
-      "mean_sensitivity": 1.0,
-      "mean_fdr_per_24h": 18.069846038302664,
-      "mean_latency_sec": 1.0
+      "patients_evaluated": 6,
+      "mean_sensitivity": 0.7638888888888888,
+      "mean_fdr_per_24h": 60.22517475413119,
+      "mean_latency_sec": 4.708051948051947
     },
     {
       "model": "knn",
-      "patients_evaluated": 1,
-      "mean_sensitivity": 0.8571428571428571,
-      "mean_fdr_per_24h": 1.3714285714285714,
-      "mean_latency_sec": 2.1666666666666665
+      "patients_evaluated": 6,
+      "mean_sensitivity": 0.6706349206349206,
+      "mean_fdr_per_24h": 3.591342391326897,
+      "mean_latency_sec": 13.110476190476192
+    },
+    {
+      "model": "random_forest",
+      "patients_evaluated": 6,
+      "mean_sensitivity": 0.6666666666666666,
+      "mean_fdr_per_24h": 7.035077256709134,
+      "mean_latency_sec": 10.623809523809523
     }
   ],
   "per_patient_rankings": {
@@ -34,6 +51,9 @@
         "n_seizure_records": 7,
         "n_nonseizure_records": 35,
         "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.6696428571428571,
+        "pr_auc": 0.9030698491702146,
+        "f1_score": 0.7894736842105263,
         "latency_sec_mean": 5.857142857142857,
         "fdr_per_24h_mean": 2.057142857142857
       },
@@ -55,8 +75,213 @@
         "n_seizure_records": 7,
         "n_nonseizure_records": 35,
         "sensitivity_mean": 0.8571428571428571,
+        "epoch_sensitivity": 0.6875,
+        "pr_auc": 0.808160224640313,
+        "f1_score": 0.8020833333333334,
         "latency_sec_mean": 2.1666666666666665,
         "fdr_per_24h_mean": 1.3714285714285714
+      }
+    ],
+    "chb02": [
+      {
+        "model": "logistic_regression",
+        "n_records": 36,
+        "n_seizure_records": 3,
+        "n_nonseizure_records": 33,
+        "sensitivity_mean": 0.6666666666666666,
+        "epoch_sensitivity": 0.16279069767441862,
+        "pr_auc": 0.04942140535205635,
+        "f1_score": 0.14432989690721648,
+        "latency_sec_mean": 9.0,
+        "fdr_per_24h_mean": 24.727272727272727
+      },
+      {
+        "model": "knn",
+        "n_records": 36,
+        "n_seizure_records": 3,
+        "n_nonseizure_records": 33,
+        "sensitivity_mean": 0.3333333333333333,
+        "epoch_sensitivity": 0.046511627906976744,
+        "pr_auc": 0.029282509849094824,
+        "f1_score": 0.07142857142857142,
+        "latency_sec_mean": 0.0,
+        "fdr_per_24h_mean": 2.1818181818181817
+      },
+      {
+        "model": "random_forest",
+        "n_records": 36,
+        "n_seizure_records": 3,
+        "n_nonseizure_records": 33,
+        "sensitivity_mean": 0.0,
+        "epoch_sensitivity": 0.0,
+        "pr_auc": 0.32880567263917726,
+        "f1_score": 0.0,
+        "latency_sec_mean": null,
+        "fdr_per_24h_mean": 0.0
+      }
+    ],
+    "chb03": [
+      {
+        "model": "random_forest",
+        "n_records": 38,
+        "n_seizure_records": 7,
+        "n_nonseizure_records": 31,
+        "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.6138613861386139,
+        "pr_auc": 0.8105074869069921,
+        "f1_score": 0.7294117647058823,
+        "latency_sec_mean": 10.571428571428571,
+        "fdr_per_24h_mean": 3.870967741935484
+      },
+      {
+        "model": "knn",
+        "n_records": 38,
+        "n_seizure_records": 7,
+        "n_nonseizure_records": 31,
+        "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.49504950495049505,
+        "pr_auc": 0.46219952945011916,
+        "f1_score": 0.5617977528089888,
+        "latency_sec_mean": 14.285714285714286,
+        "fdr_per_24h_mean": 4.645161290322581
+      },
+      {
+        "model": "logistic_regression",
+        "n_records": 38,
+        "n_seizure_records": 7,
+        "n_nonseizure_records": 31,
+        "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.6336633663366337,
+        "pr_auc": 0.3063327222320408,
+        "f1_score": 0.5079365079365079,
+        "latency_sec_mean": 1.2857142857142858,
+        "fdr_per_24h_mean": 30.963877408620043
+      }
+    ],
+    "chb04": [
+      {
+        "model": "random_forest",
+        "n_records": 42,
+        "n_seizure_records": 2,
+        "n_nonseizure_records": 40,
+        "sensitivity_mean": 0.0,
+        "epoch_sensitivity": 0.0,
+        "pr_auc": 0.0002849266669990811,
+        "f1_score": 0.0,
+        "latency_sec_mean": null,
+        "fdr_per_24h_mean": 0.0
+      },
+      {
+        "model": "knn",
+        "n_records": 42,
+        "n_seizure_records": 2,
+        "n_nonseizure_records": 40,
+        "sensitivity_mean": 0.0,
+        "epoch_sensitivity": 0.0,
+        "pr_auc": 0.0002849266669990811,
+        "f1_score": 0.0,
+        "latency_sec_mean": null,
+        "fdr_per_24h_mean": 1.349646304392048
+      },
+      {
+        "model": "logistic_regression",
+        "n_records": 42,
+        "n_seizure_records": 2,
+        "n_nonseizure_records": 40,
+        "sensitivity_mean": 0.0,
+        "epoch_sensitivity": 0.0,
+        "pr_auc": 0.00028724299450715696,
+        "f1_score": 0.0,
+        "latency_sec_mean": null,
+        "fdr_per_24h_mean": 56.75842261047616
+      }
+    ],
+    "chb05": [
+      {
+        "model": "knn",
+        "n_records": 39,
+        "n_seizure_records": 5,
+        "n_nonseizure_records": 34,
+        "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.7163120567375887,
+        "pr_auc": 0.8587277182841843,
+        "f1_score": 0.8347107438016529,
+        "latency_sec_mean": 12.2,
+        "fdr_per_24h_mean": 0.0
+      },
+      {
+        "model": "random_forest",
+        "n_records": 39,
+        "n_seizure_records": 5,
+        "n_nonseizure_records": 34,
+        "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.75177304964539,
+        "pr_auc": 0.8450422198423603,
+        "f1_score": 0.7681159420289855,
+        "latency_sec_mean": 19.4,
+        "fdr_per_24h_mean": 9.882352941176471
+      },
+      {
+        "model": "logistic_regression",
+        "n_records": 39,
+        "n_seizure_records": 5,
+        "n_nonseizure_records": 34,
+        "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.8652482269503546,
+        "pr_auc": 0.9040165015121256,
+        "f1_score": 0.8299319727891157,
+        "latency_sec_mean": 6.8,
+        "fdr_per_24h_mean": 16.939221117810003
+      }
+    ],
+    "chb06": [],
+    "chb07": [],
+    "chb08": [],
+    "chb09": [],
+    "chb10": [],
+    "chb11": [],
+    "chb12": [],
+    "chb14": [],
+    "chb20": [],
+    "chb21": [],
+    "chb22": [],
+    "chb23": [],
+    "chb24": [
+      {
+        "model": "random_forest",
+        "n_records": 22,
+        "n_seizure_records": 12,
+        "n_nonseizure_records": 10,
+        "sensitivity_mean": 1.0,
+        "epoch_sensitivity": 0.5757575757575758,
+        "pr_auc": 0.5123096350422446,
+        "f1_score": 0.6178861788617886,
+        "latency_sec_mean": 6.666666666666667,
+        "fdr_per_24h_mean": 26.4
+      },
+      {
+        "model": "logistic_regression",
+        "n_records": 22,
+        "n_seizure_records": 12,
+        "n_nonseizure_records": 10,
+        "sensitivity_mean": 0.9166666666666666,
+        "epoch_sensitivity": 0.3787878787878788,
+        "pr_auc": 0.1350005669740434,
+        "f1_score": 0.1697792869269949,
+        "latency_sec_mean": 5.454545454545454,
+        "fdr_per_24h_mean": 213.89240862230554
+      },
+      {
+        "model": "knn",
+        "n_records": 22,
+        "n_seizure_records": 12,
+        "n_nonseizure_records": 10,
+        "sensitivity_mean": 0.8333333333333334,
+        "epoch_sensitivity": 0.30303030303030304,
+        "pr_auc": 0.3641601617386321,
+        "f1_score": 0.418848167539267,
+        "latency_sec_mean": 36.9,
+        "fdr_per_24h_mean": 12.0
       }
     ]
   }

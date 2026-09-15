@@ -32,8 +32,8 @@ def parse_seizure_file(edf_path):
     if not match:
         return []
 
-    starts = re.findall(r"Seizure Start Time:\s*([0-9.]+)", match.group(1))
-    ends = re.findall(r"Seizure End Time:\s*([0-9.]+)", match.group(1))
+    starts = re.findall(r"Seizure(?:\s+\d+)?\s+Start Time:\s*([0-9.]+)", match.group(1))
+    ends = re.findall(r"Seizure(?:\s+\d+)?\s+End Time:\s*([0-9.]+)", match.group(1))
     return [(float(start), float(end)) for start, end in zip(starts, ends)]
 
 
