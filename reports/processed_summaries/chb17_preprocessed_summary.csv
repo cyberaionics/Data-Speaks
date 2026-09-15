@@ -1,6 +1,6 @@
 patient,record_id,n_windows,n_ictal,n_interictal,n_unknown,duration_seconds,n_seizures,channels,feature_dim,preprocessing_steps
-chb17,chb17a_03,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb17,chb17a_04,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb17,chb17a_03,883,23,860,0,3600.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb17,chb17a_04,883,29,854,0,3600.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17a_05,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17a_06,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17a_08,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
@@ -8,7 +8,7 @@ chb17,chb17b_57,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -
 chb17,chb17b_58,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17b_59,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17b_60,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb17,chb17b_63,905,0,905,0,3624.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb17,chb17b_63,889,22,867,0,3624.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17b_67,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17b_68,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb17,chb17b_69,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking

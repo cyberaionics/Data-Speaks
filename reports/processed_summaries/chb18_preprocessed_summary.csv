@@ -27,11 +27,11 @@ chb18,chb18_25,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass ->
 chb18,chb18_26,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb18,chb18_27,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb18,chb18_28,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb18,chb18_29,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb18,chb18_30,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb18,chb18_31,568,0,568,0,2274.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb18,chb18_32,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb18,chb18_29,883,13,870,0,3600.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb18,chb18_30,883,8,875,0,3600.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb18,chb18_31,552,18,534,0,2274.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb18,chb18_32,883,14,869,0,3600.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb18,chb18_33,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
 chb18,chb18_34,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb18,chb18_35,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
-chb18,chb18_36,899,0,899,0,3600.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb18,chb18_35,883,17,866,0,3600.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb18,chb18_36,883,12,871,0,3600.0,1,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
