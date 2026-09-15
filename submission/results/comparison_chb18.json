@@ -1,0 +1,41 @@
+{
+  "patient": "chb18",
+  "ranking": [
+    {
+      "model": "logistic_regression",
+      "n_records": 35,
+      "n_seizure_records": 6,
+      "n_nonseizure_records": 29,
+      "sensitivity_mean": 0.8333333333333334,
+      "epoch_sensitivity": 0.5,
+      "pr_auc": 0.2580277130357791,
+      "f1_score": 0.3333333333333333,
+      "latency_sec_mean": 10.4,
+      "fdr_per_24h_mean": 43.03448275862069
+    },
+    {
+      "model": "random_forest",
+      "n_records": 35,
+      "n_seizure_records": 6,
+      "n_nonseizure_records": 29,
+      "sensitivity_mean": 0.5,
+      "epoch_sensitivity": 0.07317073170731707,
+      "pr_auc": 0.20040026309770467,
+      "f1_score": 0.11320754716981132,
+      "latency_sec_mean": 18.666666666666668,
+      "fdr_per_24h_mean": 2.4827586206896552
+    },
+    {
+      "model": "knn",
+      "n_records": 35,
+      "n_seizure_records": 6,
+      "n_nonseizure_records": 29,
+      "sensitivity_mean": 0.3333333333333333,
+      "epoch_sensitivity": 0.04878048780487805,
+      "pr_auc": 0.09929772189672945,
+      "f1_score": 0.07920792079207921,
+      "latency_sec_mean": 14.0,
+      "fdr_per_24h_mean": 0.8275862068965517
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Model,Patients_Evaluated,Mean_Sensitivity,Mean_FDR_per_24h,Mean_Latency_sec
+logistic_regression,12,0.823,61.533,7.083
+knn,12,0.652,3.772,12.674
+random_forest,12,0.638,7.572,13.285
+svm,1,0.000,0.000,N/A

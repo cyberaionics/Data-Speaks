@@ -1,0 +1,20 @@
+patient,record_id,n_windows,n_ictal,n_interictal,n_unknown,duration_seconds,n_seizures,channels,feature_dim,preprocessing_steps
+chb09,chb09_01,2005,0,2005,0,8023.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_02,3599,0,3599,0,14399.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_03,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_04,3603,0,3603,0,14415.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_05,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_06,3599,0,3599,0,14399.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_07,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_08,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_09,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_10,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_11,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_12,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_13,3600,0,3600,0,14405.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_14,3602,0,3602,0,14411.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_15,3604,0,3604,0,14421.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_16,3397,0,3397,0,13591.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_17,243,0,243,0,974.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_18,3599,0,3599,0,14400.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking
+chb09,chb09_19,1424,0,1424,0,5700.0,0,408,408,channel-selection -> FIR bandpass -> ICA artifact removal -> z-score normalization -> 256Hz resample -> 6s window stacking

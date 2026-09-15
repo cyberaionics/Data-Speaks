@@ -1,0 +1,220 @@
+{
+  "model": "knn",
+  "patient": "chb17",
+  "summary": {
+    "n_records": 20,
+    "n_seizure_records": 3,
+    "n_nonseizure_records": 17,
+    "sensitivity_mean": 1.0,
+    "epoch_sensitivity": 0.5135135135135135,
+    "pr_auc": 0.5762244488745949,
+    "f1_score": 0.6178861788617886,
+    "latency_sec_mean": 9.666666666666666,
+    "fdr_per_24h_mean": 11.294117647058824
+  },
+  "records": [
+    {
+      "test_record": "chb17a_03",
+      "n_windows": 883,
+      "n_positive_windows": 15,
+      "n_events": 2,
+      "epoch_sensitivity": 0.6521739130434783,
+      "pr_auc": 0.900185610577448,
+      "f1_score": 0.7894736842105263,
+      "sensitivity": 1.0,
+      "latency_sec": 2.0
+    },
+    {
+      "test_record": "chb17a_04",
+      "n_windows": 883,
+      "n_positive_windows": 13,
+      "n_events": 2,
+      "epoch_sensitivity": 0.4482758620689655,
+      "pr_auc": 0.7884211348459406,
+      "f1_score": 0.6190476190476191,
+      "sensitivity": 1.0,
+      "latency_sec": 23.0
+    },
+    {
+      "test_record": "chb17a_05",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17a_06",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17a_08",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17b_57",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17b_58",
+      "n_windows": 899,
+      "n_positive_windows": 1,
+      "n_events": 1,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 24.0
+    },
+    {
+      "test_record": "chb17b_59",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17b_60",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17b_63",
+      "n_windows": 889,
+      "n_positive_windows": 10,
+      "n_events": 1,
+      "epoch_sensitivity": 0.45454545454545453,
+      "pr_auc": 0.5085855745304564,
+      "f1_score": 0.625,
+      "sensitivity": 1.0,
+      "latency_sec": 4.0
+    },
+    {
+      "test_record": "chb17b_67",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17b_68",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17b_69",
+      "n_windows": 899,
+      "n_positive_windows": 5,
+      "n_events": 3,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 72.0
+    },
+    {
+      "test_record": "chb17c_02",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17c_03",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17c_04",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17c_05",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17c_06",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17c_07",
+      "n_windows": 899,
+      "n_positive_windows": 0,
+      "n_events": 0,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 0.0
+    },
+    {
+      "test_record": "chb17c_08",
+      "n_windows": 899,
+      "n_positive_windows": 5,
+      "n_events": 4,
+      "epoch_sensitivity": 0.0,
+      "pr_auc": null,
+      "f1_score": 0.0,
+      "fdr_per_24h": 96.0
+    }
+  ]
+}

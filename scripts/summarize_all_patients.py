@@ -91,7 +91,7 @@ def save_model_summary_plot(model_summary, fig_root: Path):
     labels = [row["model"] for row in model_summary]
     sensitivity = [row["mean_sensitivity"] for row in model_summary]
     fdr = [row["mean_fdr_per_24h"] for row in model_summary]
-    latency = [row["mean_latency_sec"] for row in model_summary]
+    latency = [row["mean_latency_sec"] if row["mean_latency_sec"] is not None else 0.0 for row in model_summary]
 
     axes[0].bar(labels, sensitivity, color="#4C78A8")
     axes[0].set_title("Mean sensitivity across patients")

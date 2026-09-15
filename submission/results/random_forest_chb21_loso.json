@@ -1,0 +1,16 @@
+{
+  "model": "random_forest",
+  "patient": "chb21",
+  "summary": {
+    "n_records": 0,
+    "n_seizure_records": 0,
+    "n_nonseizure_records": 0,
+    "sensitivity_mean": null,
+    "epoch_sensitivity": null,
+    "pr_auc": null,
+    "f1_score": null,
+    "latency_sec_mean": null,
+    "fdr_per_24h_mean": null
+  },
+  "records": []
+}
